@@ -1,0 +1,55 @@
+[
+    {
+        "title": "Fast Inverse Square Root",
+        "author": "Quake III Team",
+        "code": {
+            "language": "c",
+            "code": "float Q_rsqrt( float number )\n{\n\tlong i;\n\tfloat x2, y;\n\tconst float threehalfs = 1.5F;\n\n\tx2 = number * 0.5F;\n\ty  = number;\n\ti  = * ( long * ) &y;                       // evil floating point bit level hacking\n\ti  = 0x5f3759df - ( i >> 1 );               // what the fuck? \n\ty  = * ( float * ) &i;\n\ty  = y * ( threehalfs - ( x2 * y * y ) );   // 1st iteration\n//\ty  = y * ( threehalfs - ( x2 * y * y ) );   // 2nd iteration, this can be removed\n\n\treturn y;\n}"
+        },
+        "description": "Quickly calculates 1/sqrt(x), useful for graphics and physics because the formula is a key part in normalizing vectors",
+        "comments": [
+            {
+                "content": "Neat!",
+                "author": "Nick Milford"
+            }
+        ]
+    },
+    {
+        "title": "Haskell Monad Definiton",
+        "author": "Haskell Wiki",
+        "code": {
+            "language": "haskell",
+            "code": "class Monad m where\n  (>>=)  :: m a -> (  a -> m b) -> m b\n  (>>)   :: m a ->  m b         -> m b\n  return ::   a                 -> m a\n  fail   :: String -> m a"
+        },
+        "description": "The definition of the Monad class in Haskell. This is the basis on what many parts of the language are built upon",
+        "comments": [
+            {
+                "content": "beautiful",
+                "author": "Tristan Thompson"
+            },
+            {
+                "content": "wtf am I looking at",
+                "author": "Owen Loughran"
+            }
+        ]
+    },
+    {
+        "title": "Functional turtle interface",
+        "author": "scottw",
+        "code": {
+            "language": "fsharp",
+            "code": "let log = printfn \"%s\"\nlet move = Turtle.move log \nlet turn = Turtle.turn log \nlet penUp = Turtle.penUp log\nlet penDown = Turtle.penDown log\nlet setColor = Turtle.setColor log \n\nlet normalSize() = \n    let turtleFn = function\n        | Move dist -> move dist \n        | Turn angle -> turn angle\n        | PenUp -> penUp \n        | PenDown -> penDown \n        | SetColor color -> setColor color\n\n    // partially apply the function to the API\n    let api = TurtleApi() \n    api.Exec turtleFn \n    // the return value is a function: \n    //     string -> Result<unit,ErrorMessage> \n\nlet halfSize() = \n    let turtleFn = function\n        | Move dist -> move (dist/2.0)  \n        | Turn angle -> turn angle\n        | PenUp -> penUp \n        | PenDown -> penDown \n        | SetColor color -> setColor color\n\n    // partially apply the function to the API\n    let api = TurtleApi() \n    api.Exec turtleFn \n    // the return value is a function: \n    //     string -> Result<unit,ErrorMessage> "
+        },
+        "description": "A basic turtle interface, using functions for dependency injection",
+        "comments":[
+            {
+                "content": "I like it",
+                "author": "Nick Milford"
+            },
+            {
+                "content": "I don't care if it's functional, it's not haskell so I don't like it",
+                "author": "Tristan Thompson"
+            }
+        ]
+    }
+]
