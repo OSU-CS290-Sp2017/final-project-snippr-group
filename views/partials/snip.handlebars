@@ -6,11 +6,16 @@
         <a href="#">{{author}}</a>
     </div>
     <div class="snip-code">
-        {{code}}
+        {{> codeblock this.code}}
     </div>
     <div class="snip-details">
         {{description}}
     </div>
-    <button class="comment">comment</button>
-    <button class="react">☻/♥/♫/‼</button>
+    <button class="comment-button">comment</button>
+    <button class="react-buttons">☻/♥/♫/‼</button>
+    <div class="comments">      {{! Only pass a few high priority / recent comments for the }}
+        {{#each comments}}      {{! main page. More can be shown when the page for this }}
+            {{> comment this}}  {{! particular snip is requested}}
+        {{/each}}
+    </div>
 </article>
