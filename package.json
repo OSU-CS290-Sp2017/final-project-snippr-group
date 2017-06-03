@@ -5,7 +5,7 @@
 	"main": "server.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"build": "handlebars views/partials/snip.handlebars -f public/snipTemplate.js",
+		"build": "handlebars views/partials/header.handlebars -f public/snipTemplate.js",
 		"prestart": "npm run build",
 		"start": "node server.js"
 	},

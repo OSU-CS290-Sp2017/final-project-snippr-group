@@ -7,6 +7,13 @@
             <li class="navitem" id="nav-home"><a href="#">Home</a></li>
             <li class="navitem" id="nav-search"><a href="#">Search</a></li>
             <li class="navitem" id="nav-create"><a href="#">Create</a></li>
+            <li class="navitem" id="nav-styleSelect">
+                <select id="styleSelect-menu">
+                    {{#each this}}
+                        <option>{{this}}</option>
+                    {{/each}}
+                </select>
+            </li>
         </ul>
     </nav>
 </header>
