@@ -10,7 +10,15 @@
             <li class="navitem" id="nav-styleSelect">
                 <select id="styleSelect-menu">
                     {{#each this}}
-                        <option>{{this}}</option>
+                        {{#if nested}}
+                            <optgroup label="{{name}}">
+                                {{#each val}}
+                                    <option value="{{val}}">{{name}}</option>
+                                {{/each}}
+                            </optgroup>
+                        {{else}}
+                            <option value="{{val}}">{{name}}</option>
+                        {{/if}}
                     {{/each}}
                 </select>
             </li>

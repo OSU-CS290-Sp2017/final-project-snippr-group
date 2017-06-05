@@ -11,17 +11,42 @@ var port = process.env.PORT || 3000;
 var app = expr();
 
 var snipCount = 0;
+var styles = 0;
 
 // ----- startup computations -----
 
 function loadStyles(){
-    var stylesList = fs.readdirSync('./public/highlight/styles');
+    var stylesList = [];
+    var groupsList = [];
+    var filesList = fs.readdirSync('./public/highlight/styles');
 
-    for(var i = 0; i < stylesList.length; i++){
-        stylesList[i] = stylesList[i].split('.')[0];
+    //only css files allowed
+    filesList = filesList.filter((x) => {return x.indexOf('.css') >= 0});
+
+    for(var i = 0; i < filesList.length; i++){
+        var val = filesList[i].split('.')[0];
+        var nested = false;
+        var name = val.replace('-', ' ');
+
+        var contained = [];
+        var title = name.split(' ')[0];
+        var j = i;
+        while(filesList[j].split('-')[0] === title){
+            var subName = filesList[j].replace('-', ' ').split('.')[0];
+            contained.push({'name': subName, 'val': filesList[j].split('.')[0]});
+            nested = contained.length > 1;
+            j++;
+        }
+
+        if(nested){
+            stylesList.push({'name':title, 'val':contained.reverse(), 'nested':true});
+            i = j;
+        }
+        else
+            stylesList.push({'name':name, 'val':val, 'nested':false});
     }
 
-    fs.writeFileSync('./public/highlight/styleNames.txt', stylesList.join('\n'));
+    console.log('loaded', filesList.length, 'styles,', stylesList.length, 'unique styles');
 
     return stylesList;
 }
@@ -48,7 +73,6 @@ app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 
 app.get('*', function(req, res, next){
-    console.log(req.query.style);
     console.log('GETTING', req.url);
     next();
 });
@@ -82,7 +106,6 @@ app.get('*', function(req, res){
 
 // ----- starting server -----
 
-loadStyles();
 app.listen(port, function(){
     console.log('Server started on', port);
 });
