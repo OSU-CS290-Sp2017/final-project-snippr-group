@@ -1,3 +1,5 @@
+// ----- global state / libraries -----
+
 var expr = require('express');
 var exhbs = require('express-handlebars')
 var path = require('path');
@@ -7,6 +9,10 @@ var hbs = exhbs.create({defaultLayout: 'main'});
 var exData = require('./exampleData.json');
 var port = process.env.PORT || 3000;
 var app = expr();
+
+var snipCount = 0;
+
+// ----- startup computations -----
 
 function loadStyles(){
     var stylesList = fs.readdirSync('./public/highlight/styles');
@@ -20,7 +26,18 @@ function loadStyles(){
     return stylesList;
 }
 
+function setSnipID(snip){
+    snip['id'] = snipCount;
+    snipCount++;
+    console.log('Snip', snipCount-1, 'ID set');
+}
+
+for(var i = 0; i < exData.length; i++){
+    setSnipID(exData[i]);
+}
+
 var header = hbs.render('views/partials/header.handlebars', loadStyles());
+
 header
 .catch(function (err) {console.log("ERROR PRECOMPILING HEADER", err)})
 .then(function (val) {fs.writeFileSync('./views/partials/headerPre.handlebars', val)});
@@ -31,6 +48,7 @@ app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 
 app.get('*', function(req, res, next){
+    console.log(req.query.style);
     console.log('GETTING', req.url);
     next();
 });
@@ -41,7 +59,26 @@ app.get('/', function(req, res){
     res.render('snipMany', args);
 });
 
+app.get('/single/[0-9]+', function(req, res, next){
+    res.status(200);
+    var idx = parseInt(req.url.match('[0-9]+')[0]);
+
+    if(isNaN(idx) || idx < 0 || idx >= snipCount){
+        console.log('Snip DNE:', idx);
+        next();
+    }
+    else{
+        res.render('snipSingle', exData[idx]);
+    }
+});
+
 app.use(expr.static(path.join(__dirname, 'public')));
+
+app.get('*', function(req, res){
+    res.status(404);
+    console.log('could not GET', req.url, '\n');
+    res.send();
+})
 
 // ----- starting server -----
 
