@@ -4,6 +4,9 @@ var expr = require('express');
 var exhbs = require('express-handlebars')
 var path = require('path');
 var fs = require('fs');
+var style = require('./loadStyles.js');
+
+console.log(style);
 
 var hbs = exhbs.create({defaultLayout: 'main'});
 var exData = require('./exampleData.json');
@@ -15,42 +18,6 @@ var styles = 0;
 
 // ----- startup computations -----
 
-function loadStyles(){
-    var stylesList = [];
-    var groupsList = [];
-    var filesList = fs.readdirSync('./public/highlight/styles');
-
-    //only css files allowed
-    filesList = filesList.filter((x) => {return x.indexOf('.css') >= 0});
-
-    for(var i = 0; i < filesList.length; i++){
-        var val = filesList[i].split('.')[0];
-        var nested = false;
-        var name = val.replace('-', ' ');
-
-        var contained = [];
-        var title = name.split(' ')[0];
-        var j = i;
-        while(filesList[j].split('-')[0] === title){
-            var subName = filesList[j].replace('-', ' ').split('.')[0];
-            contained.push({'name': subName, 'val': filesList[j].split('.')[0]});
-            nested = contained.length > 1;
-            j++;
-        }
-
-        if(nested){
-            stylesList.push({'name':title, 'val':contained.reverse(), 'nested':true});
-            i = j;
-        }
-        else
-            stylesList.push({'name':name, 'val':val, 'nested':false});
-    }
-
-    console.log('loaded', filesList.length, 'styles,', stylesList.length, 'unique styles');
-
-    return stylesList;
-}
-
 function setSnipID(snip){
     snip['id'] = snipCount;
     snipCount++;
@@ -61,7 +28,7 @@ for(var i = 0; i < exData.length; i++){
     setSnipID(exData[i]);
 }
 
-var header = hbs.render('views/partials/header.handlebars', loadStyles());
+var header = hbs.render('views/partials/header.handlebars', style.load('./public/highlight/styles'));
 
 header
 .catch(function (err) {console.log("ERROR PRECOMPILING HEADER", err)})
