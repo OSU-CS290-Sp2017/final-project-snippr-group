@@ -1,0 +1,26 @@
+{{> header}}
+
+<form class="snip-create">
+    <!-- parts of a snip
+            Title
+            Author
+            Code
+            Description
+            Language
+            Other tags
+    -->
+    <label for="snip-title">Title</label>
+    <input type="text" id="snip-title">
+    <label for="snip-author">Author</label>
+    <input type="text" id="snip-author">
+
+    <pre><code>
+        <div contenteditable="true" id="snip-code" rows="10" cols="60">Will int i be highlighted?</textarea>
+    </code></pre>
+
+    <textarea id="snip-description" rows="5" cols="60"></textarea>
+
+    <label for="snip-language">Language</label>
+    <input type="select" id="snip-language">
+    <!-- tags to be implemented later -->
+</form>

@@ -57,7 +57,7 @@
         "author": "RxJS",
         "code": {
             "language": "js",
-            "code": "  var mousemove = Rx.Observable.fromEvent(document, 'mousemove');\n  var left = mousemove.map(extractClientX);\n  var top = mousemove.map(extractClientY);\n\n  // Update the mouse\n  var themouse = document.querySelector('#themouse');\n  left.subscribe(setLeft.bind(themouse));\n  top.subscribe(setTop.bind(themouse));\n\n  // Update the tail\n  var mouseoffset = themouse.offsetWidth;\n  var thetail = document.querySelector('#thetail');\n  left\n    .map(partialAdd(mouseoffset))\n    .delay(delay)\n    .subscribe(setLeft.bind(thetail));\n  top\n    .delay(delay)\n    .subscribe(setTop.bind(thetail));"
+            "code": "var mousemove = Rx.Observable.fromEvent(document, 'mousemove');\n  var left = mousemove.map(extractClientX);\n  var top = mousemove.map(extractClientY);\n\n  // Update the mouse\n  var themouse = document.querySelector('#themouse');\n  left.subscribe(setLeft.bind(themouse));\n  top.subscribe(setTop.bind(themouse));\n\n  // Update the tail\n  var mouseoffset = themouse.offsetWidth;\n  var thetail = document.querySelector('#thetail');\n  left\n    .map(partialAdd(mouseoffset))\n    .delay(delay)\n    .subscribe(setLeft.bind(thetail));\n  top\n    .delay(delay)\n    .subscribe(setTop.bind(thetail));"
         },
         "description": "moves an image to follow the mouse using RxJS",
         "comments":[
