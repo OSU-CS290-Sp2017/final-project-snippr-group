@@ -110,8 +110,8 @@ header{
 
 .snip-code {
    padding: 0;
-
-}
+   margin: 0;
+ }
 
 .snip-author {
    margin: 0 15px 0 0;
