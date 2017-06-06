@@ -64,7 +64,13 @@ function initStyle(){
         var styleEnd = query.indexOf('&', styleStart);
 
         var style = query.slice(styleStart, styleEnd === -1 ? undefined : styleEnd);
-        styleSelect.value = style;
+
+        if(style === ""){
+            styleSelect.value = "obsidian";
+        }
+        else{
+            styleSelect.value = style;
+        }
     }
 }
 

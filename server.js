@@ -6,8 +6,6 @@ var path = require('path');
 var fs = require('fs');
 var style = require('./loadStyles.js');
 
-console.log(style);
-
 var hbs = exhbs.create({defaultLayout: 'main'});
 var exData = require('./exampleData.json');
 var port = process.env.PORT || 3000;
@@ -62,6 +60,11 @@ app.get('/single/[0-9]+', function(req, res, next){
         res.render('snipSingle', exData[idx]);
     }
 });
+
+app.get('/create', function(req, res){
+    res.status(200);
+    res.render('snipCreate');
+})
 
 app.use(expr.static(path.join(__dirname, 'public')));
 

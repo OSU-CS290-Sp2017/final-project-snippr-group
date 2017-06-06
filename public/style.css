@@ -6,10 +6,12 @@ body {
 
    background-color: #444;
 }
+
 a {
    color: inherit;
    text-decoration: none;
 }
+
 header{
    width: 100%;
 
@@ -18,6 +20,7 @@ header{
 
    background-color: #111;
 }
+
 .site-title {
    margin: 0;
    padding: inherit;
@@ -30,21 +33,25 @@ header{
 
    color: #97DB4F;
 }
+
 .logo {
    margin: inherit;
    padding: inherit;
 
    display: none;
 }
+
 .navbar{
    margin: 0;
    padding: inherit;
    width: 74%
 }
+
 .navlist{
    margin: 0;
    padding: inherit;
 }
+
 .navitem{
    margin: inherit;
    padding: inherit;
