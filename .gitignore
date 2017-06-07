@@ -2,5 +2,5 @@ node_modules
 npm-debug.log
 
 # This is a built file we don't want to include.
-public/twitTemplate.js
+public/snipTemplate.js
 views/partials/headerPre.handlebars

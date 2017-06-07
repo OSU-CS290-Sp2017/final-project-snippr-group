@@ -1,0 +1,31 @@
+{{> headerPre}}
+
+<div id="snip-create">
+    <!-- parts of a snip
+            Title
+            Author
+            Code
+            Description
+            Language
+            Other tags
+    -->
+    <label for="create-title">Title</label>
+    <input type="text" id="create-title">
+    <label for="create-author">Author</label>
+    <input type="text" id="create-author">
+
+    <pre><code>
+        <textarea id="create-code" rows="10" cols="60"></textarea>
+    </code></pre>
+
+    <textarea id="create-description" rows="5" cols="60"></textarea>
+
+    <label for="create-language">Language</label>
+    <datalist id="create-language">
+        <!-- Languages will eventually go here -->
+    </datalist>
+
+    <input type="submit" id="create-submit">
+    <!-- tags to be implemented later -->
+</div>
+<script src="/createSnip.js"></script>
