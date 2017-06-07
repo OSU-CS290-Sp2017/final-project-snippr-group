@@ -29,23 +29,16 @@ function submitToServer(snip){
     post.open('POST', '/api/snip', true);
     post.setRequestHeader('Content-Type', 'application/json');
 
-    post.onload = function(ev){
-        if(ev.target.status !== 200){
-            console.log(ev.target.response);
-        }
-    };
-
     post.onreadystatechange = function(){
         var params = window.location.search;
         var dest = '/' + params;
 
         window.setTimeout(function(){
-            //window.location.href = dest;
+            window.location.href = dest;
         }, 100);
     };
     
     post.send(JSON.stringify(snip));
-    console.log('sent', snip);
 }
 
 form.submit.onclick = function(){ submitToServer(getSubmission()); };

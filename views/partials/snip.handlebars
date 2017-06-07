@@ -1,4 +1,4 @@
-<article class="snip">
+<article class="snip" id="{{id}}">
     <div class="snip-title">
         <a href="/single/{{id}}">{{title}}</a>
     </div>
@@ -12,7 +12,12 @@
         {{description}}
     </div>
     <button class="comment-button">comment</button>
-    <button class="react-buttons">☻/♥/♫/‼</button>
+    <div class="react-buttons">
+        <button id="button-like">♥ {{react.like}}</button>
+        <button id="button-funny">☻ {{react.funny}}</button>
+        <button id="button-cool">♫ {{react.cool}}</button>
+        <button id="button-wat">? {{react.wat}}</button>
+    </div>
     <div class="comments">      {{! Only pass a few high priority / recent comments for the }}
         {{#each comments}}      {{! main page. More can be shown when the page for this }}
             {{> comment this}}  {{! particular snip is requested}}
