@@ -1,19 +1,20 @@
-// ----- global state / libraries -----
+// ----- global values / libraries / requires -----
 
 var expr = require('express');
 var exhbs = require('express-handlebars')
 var path = require('path');
 var fs = require('fs');
+var styles = require('./loadStyles.js');
+var bodyParser = require('body-parser');
 
 var hbs = exhbs.create({defaultLayout: 'main'});
 var exData = require('./exampleData.json');
 var port = process.env.PORT || 3000;
 var app = expr();
 
-var bodyParser = require('body-parser')
-
 var snipCount = 0;
-var styles = 0;
+
+// ----- helping functions -----
 
 /*
 * Get snips. TODO: Get from server.
@@ -100,42 +101,6 @@ function isSelected(key, query, object) {
 
 // ----- startup computations -----
 
-function loadStyles(){
-    var stylesList = [];
-    var groupsList = [];
-    var filesList = fs.readdirSync('./public/highlight/styles');
-
-    //only css files allowed
-    filesList = filesList.filter((x) => {return x.indexOf('.css') >= 0});
-
-    for(var i = 0; i < filesList.length; i++){
-        var val = filesList[i].split('.')[0];
-        var nested = false;
-        var name = val.replace('-', ' ');
-
-        var contained = [];
-        var title = name.split(' ')[0];
-        var j = i;
-        while(filesList[j].split('-')[0] === title){
-            var subName = filesList[j].replace('-', ' ').split('.')[0];
-            contained.push({'name': subName, 'val': filesList[j].split('.')[0]});
-            nested = contained.length > 1;
-            j++;
-        }
-
-        if(nested){
-            stylesList.push({'name':title, 'val':contained.reverse(), 'nested':true});
-            i = j;
-        }
-        else
-            stylesList.push({'name':name, 'val':val, 'nested':false});
-    }
-
-    console.log('loaded', filesList.length, 'styles,', stylesList.length, 'unique styles');
-
-    return stylesList;
-}
-
 function setSnipID(snip){
     snip['id'] = snipCount;
     snipCount++;
@@ -146,7 +111,7 @@ for(var i = 0; i < exData.length; i++){
     setSnipID(exData[i]);
 }
 
-var header = hbs.render('views/partials/header.handlebars', loadStyles());
+var header = hbs.render('views/partials/header.handlebars', styles.load('./public/highlight/styles'));
 
 header
 .catch(function (err) {console.log("ERROR PRECOMPILING HEADER", err)})
@@ -182,10 +147,14 @@ app.get('/single/[0-9]+', function(req, res, next){
 });
 
 app.get('/api/search', function(req, res){
-
   var snips = getSnips();
   var parts = req.body;
   res.render('snipMany', searchSnips(parts, snips));
+});
+
+app.get('/create', function(req, res){
+  res.status(200);
+  res.render('snipCreate');
 });
 
 app.post('api/snip', function(req, res){
