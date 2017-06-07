@@ -41,6 +41,8 @@ function setSnipID(snip){
 
 // ----- startup computations -----
 
+app.use(bodyParser.json());
+
 for(var i = 0; i < getSnips().length; i++){
     setSnipID(getSnips()[i]);
 }
@@ -48,8 +50,8 @@ for(var i = 0; i < getSnips().length; i++){
 var header = hbs.render('views/partials/header.handlebars', styles.load('./public/highlight/styles'));
 
 header
-.catch(function (err) {console.log("ERROR PRECOMPILING HEADER", err)})
-.then(function (val) {fs.writeFileSync('./views/partials/headerPre.handlebars', val)});
+.catch(function (err) { console.log("ERROR PRECOMPILING HEADER", err) })
+.then(function (val) { fs.writeFileSync('./views/partials/headerPre.handlebars', val) });
 
 // ----- Setting up Express routing -----
 
@@ -92,20 +94,19 @@ app.get('/create', function(req, res){
 });
 
 app.post('/api/snip', function(req, res){
-  var snip = req.body
-  console.log(snip);
+  var snip = req.body;
+  console.log(req.body);
   putSnip(snip);
   res.sendStatus(200);
 });
 
 app.use(expr.static(path.join(__dirname, 'public')));
-app.use(bodyParser.json());
 
 app.get('*', function(req, res){
     res.status(404);
     console.log('could not GET', req.url, '\n');
     res.send();
-})
+});
 
 // ----- starting server -----
 
