@@ -29,13 +29,16 @@ function getSnips() {
 */
 function putSnip(snip) {
   exData.push(snip);
-  setSnipID(snip);
+  initSnip(snip);
 }
 
 // sets the ID for the snip so that it may be referenced by URL
-function setSnipID(snip){
+function initSnip(snip){
     snip['id'] = snipCount;
     snipCount++;
+
+    snip['react'] = { 'like':0, 'funny':0, 'cool':0, 'wat':0 };
+
     console.log('Snip', snipCount-1, 'ID set');
 }
 
@@ -43,9 +46,11 @@ function setSnipID(snip){
 
 app.use(bodyParser.json());
 
-for(var i = 0; i < getSnips().length; i++){
-    setSnipID(getSnips()[i]);
-}
+getSnips().forEach(initSnip);
+
+// for(var i = 0; i < getSnips().length; i++){
+//     initSnip(getSnips()[i]);
+// }
 
 var header = hbs.render('views/partials/header.handlebars', styles.load('./public/highlight/styles'));
 
@@ -54,7 +59,6 @@ header
 .then(function (val) { fs.writeFileSync('./views/partials/headerPre.handlebars', val) });
 
 // ----- Setting up Express routing -----
-
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 
@@ -95,10 +99,23 @@ app.get('/create', function(req, res){
 
 app.post('/api/snip', function(req, res){
   var snip = req.body;
-  console.log(req.body);
   putSnip(snip);
   res.sendStatus(200);
 });
+
+app.post('/api/update', function(req, res){
+    var data = req.body; 
+     console.log(req.body);
+
+    getSnips().forEach( function (s){
+        if(s.id == data.id){
+            console.log('found');
+            s.react[data.item]++;
+        }
+    });
+
+    res.sendStatus(200);
+})
 
 app.use(expr.static(path.join(__dirname, 'public')));
 
