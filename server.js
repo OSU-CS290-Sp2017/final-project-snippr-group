@@ -10,16 +10,25 @@ var exData = require('./exampleData.json');
 var port = process.env.PORT || 3000;
 var app = expr();
 
+var bodyParser = require('body-parser')
+
 var snipCount = 0;
 var styles = 0;
 
 /*
 * Get snips. TODO: Get from server.
 */
-function getSnips()
-{
+function getSnips() {
   return exData;
 }
+
+/*
+* Add snip TODO: Put on server
+*/
+function putSnip(snip) {
+  exData.push(snip);
+}
+
 /*
 * Get snips from the specified locations.
 * parts is an array of objects that take the following shapes:
@@ -29,26 +38,20 @@ function getSnips()
 * {path: ["code"], select: "*", query: "bep"} Go to "code", look for query in each value in "code"
 * Pretty sure Haskell would make this a lot easier but then again maybe I just don't know what the hell I'm doing :)))
 */
-function searchSnips(parts, snips)
-{
+function searchSnips(parts, snips) {
   var qualify = [];
-  for(var i = 0; i < snips.length; i++)
-  {
+  for(var i = 0; i < snips.length; i++) {
     var snip = snips[i];
-    if(fitsAnyPart(parts, snips))
-    {
+    if(fitsAnyPart(parts, snips)) {
       qualify.push(snip);
     }
   }
   return qualify;
 }
 //Return true if snip fits any part.
-function fitsAnyPart(parts, snips)
-{
-  for(var x = 0; x < parts.length; x++)
-  {
-    if(fitsPart(parts[x], snip))
-    {
+function fitsAnyPart(parts, snips) {
+  for(var x = 0; x < parts.length; x++) {
+    if(fitsPart(parts[x], snip)) {
       return true;
     }
   }
@@ -56,32 +59,25 @@ function fitsAnyPart(parts, snips)
 }
 
 //Parse part and returns true if snip fits part
-function fitsPart(part, snip)
-{
+function fitsPart(part, snip) {
   var o = snip;
-  for(var i = 0; i < part.path.length; i++)
-  {
-    if(part.path[i] === "*")
-    {
+  for(var i = 0; i < part.path.length; i++) {
+    if(part.path[i] === "*") {
       //Iterate over each object in o, select.
       return isManyObject(part.select, part.query, o);
     }
     o = o[part.path[i]];
   }
-  if(select === "*")
-  {
+  if(select === "*") {
     return isManyValue(part.query, o)
   }
   return isSelected(part.select, part.query, o);
 }
 
 //Returns true if query is in object, for each object[k][key], for k is each value in object.
-function isManyObject(key, query, object)
-{
-  for(k in object)
-  {
-    if(k[key].contains(query))
-    {
+function isManyObject(key, query, object) {
+  for(k in object) {
+    if(k[key].contains(query)) {
       return true;
     }
   }
@@ -89,20 +85,16 @@ function isManyObject(key, query, object)
 }
 
 //Returns true if query is in object, for each object[k], for k is each value in object
-function isManyValue(query, object)
-{
-  for(k in object)
-  {
-    if(object[k].contains(query))
-    {
+function isManyValue(query, object) {
+  for(k in object) {
+    if(object[k].contains(query)) {
       return true;
     }
   }
   return false;
 }
 //Returns true if object[key] contains query
-function isSelected(key, query, object)
-{
+function isSelected(key, query, object) {
   return object[key].contains(query);
 }
 
@@ -189,13 +181,21 @@ app.get('/single/[0-9]+', function(req, res, next){
     }
 });
 
-app.get('/api/search/:queryPath/:query')
-{
-  var snips = getSnips();
+app.get('/api/search', function(req, res){
 
-}
+  var snips = getSnips();
+  var parts = req.body;
+  res.render('snipMany', searchSnips(parts, snips));
+});
+
+app.post('api/snip', function(req, res){
+  var snip = req.body
+  putSnip(snip);
+  res.sendStatus(200);
+});
 
 app.use(expr.static(path.join(__dirname, 'public')));
+app.use(bodyParser.json());
 
 app.get('*', function(req, res){
     res.status(404);
