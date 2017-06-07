@@ -5,6 +5,7 @@ var exhbs = require('express-handlebars')
 var path = require('path');
 var fs = require('fs');
 var style = require('./loadStyles.js');
+var bParser = require('body-parser');
 
 var hbs = exhbs.create({defaultLayout: 'main'});
 var exData = require('./exampleData.json');
@@ -36,6 +37,7 @@ header
 
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
+app.use(bParser.json());
 
 app.get('*', function(req, res, next){
     console.log('GETTING', req.url);
@@ -64,7 +66,12 @@ app.get('/single/[0-9]+', function(req, res, next){
 app.get('/create', function(req, res){
     res.status(200);
     res.render('snipCreate');
-})
+});
+
+app.post('/new', function(req, res){
+    console.log(req.body);
+    res.send('success');
+});
 
 app.use(expr.static(path.join(__dirname, 'public')));
 
@@ -72,7 +79,7 @@ app.get('*', function(req, res){
     res.status(404);
     console.log('could not GET', req.url, '\n');
     res.send();
-})
+});
 
 // ----- starting server -----
 
