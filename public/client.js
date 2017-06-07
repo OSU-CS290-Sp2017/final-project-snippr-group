@@ -51,8 +51,6 @@ function setKeepQuery(elem){
             window.location.href = dest;
         }, 100);
     });
-
-    
     console.log('set keep query');
 }
 
@@ -71,6 +69,9 @@ function initStyle(){
         else{
             styleSelect.value = style;
         }
+    }
+    else{
+        styleSelect.value = "obsidian";
     }
 }
 
