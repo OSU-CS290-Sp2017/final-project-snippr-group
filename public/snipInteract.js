@@ -1,3 +1,5 @@
+var commentTemplate = "<article class=\"comment\"><div class=\"comment-content\"></div></article>";
+
 function getAllReact(){
     var toReturn = [];
 
@@ -9,7 +11,8 @@ function getAllReact(){
                 'comment':
                 {
                     'submit': snips[i].querySelector('#comment-submit'),
-                    'input': snips[i].querySelector('#comment-input')
+                    'input': snips[i].querySelector('#comment-input'),
+                    'container': snips[i].querySelector('.comments')
                 },
                 'actions':
                 {
@@ -34,22 +37,32 @@ function postUpdate(id, item, content){
     post.send(JSON.stringify({ 'id': id, 'item': item, 'content':content }));
 }
 
-function setClient(elem, item){
-    var countElem = elem.querySelector('a')
-    countElem.innerHTML = parseInt(countElem.innerHTML) + 1;
+function setClientReact(elem, item){
+    var reactCount = elem.querySelector('#' + item + '-count');
+    reactCount.innerHTML = parseInt(reactCount.innerHTML) + 1;
+}
+
+function setClientComment(elem, item){
+    var tempDiv = document.createElement('div');
+    tempDiv.innerHTML = commentTemplate;
+    var comment = tempDiv.childNodes[0];
+    comment.querySelector('.comment-content').appendChild(document.createTextNode(item));
+    elem.appendChild(comment);
 }
 
 function initReact(reactObject){
     Object.keys(reactObject.actions).forEach( function(k) {
         reactObject.actions[k].onclick = function(){
-            postUpdate(reactObject.id, k);
-            setClient(reactObject.actions[k], k);
+            postUpdate(reactObject.id, 'react', k);
+            setClientReact(reactObject.actions[k], k);
         };
     });
 
     reactObject.comment.submit.onclick = function() {
-        if(reactObject.comment.input !== '')
+        if(reactObject.comment.input !== ''){
             postUpdate(reactObject.id, 'comment', reactObject.comment.input.value);
+            setClientComment(reactObject.comment.container, reactObject.comment.input.value);
+        }
     };
 }
 
