@@ -47,7 +47,7 @@ function setClientComment(elem, item){
     tempDiv.innerHTML = commentTemplate;
     var comment = tempDiv.childNodes[0];
     comment.querySelector('.comment-content').appendChild(document.createTextNode(item));
-    elem.appendChild(comment);
+    elem.insertBefore(comment, elem.firstChild);
 }
 
 function initReact(reactObject){
