@@ -111,7 +111,7 @@ app.post('/api/update', function(req, res){
             console.log('found');
 
             if(data.item === 'comment')
-                s.comments.push({'content': data.content});
+                s.comments.unshift({'content': data.content});
             else if(data.item === 'react')
                 s.react[data.content]++;
         }
