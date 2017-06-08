@@ -1,17 +1,22 @@
 function getAllReact(){
     var toReturn = [];
 
-    var reactContainers = document.getElementsByClassName('react-buttons');
-    for(var i = 0; i < reactContainers.length; i++){
+    var snips = document.getElementsByClassName('snip');
+    for(var i = 0; i < snips.length; i++){
         toReturn.push(
             {
-                'id': reactContainers[i].parentElement.id,
+                'id': snips[i].attributes.id.value,
+                'comment':
+                {
+                    'submit': snips[i].querySelector('#comment-submit'),
+                    'input': snips[i].querySelector('#comment-input')
+                },
                 'actions':
                 {
-                    'like': reactContainers[i].querySelector('#button-like'),
-                    'funny': reactContainers[i].querySelector('#button-funny'),
-                    'cool': reactContainers[i].querySelector('#button-cool'),
-                    'wat': reactContainers[i].querySelector('#button-wat')
+                    'like': snips[i].querySelector('#button-like'),
+                    'funny': snips[i].querySelector('#button-funny'),
+                    'cool': snips[i].querySelector('#button-cool'),
+                    'wat': snips[i].querySelector('#button-wat')
                 }            
             }
         );
@@ -20,13 +25,13 @@ function getAllReact(){
     return toReturn;
 }
 
-function postUpdate(id, item){
+function postUpdate(id, item, content){
     var post = new XMLHttpRequest();
 
     post.open('POST', '/api/update');
     post.setRequestHeader('Content-Type', 'application/json');
 
-    post.send(JSON.stringify({ 'id': id, 'item': item }));
+    post.send(JSON.stringify({ 'id': id, 'item': item, 'content':content }));
 }
 
 function setClient(elem, item){
@@ -41,6 +46,11 @@ function initReact(reactObject){
             setClient(reactObject.actions[k], k);
         };
     });
+
+    reactObject.comment.submit.onclick = function() {
+        if(reactObject.comment.input !== '')
+            postUpdate(reactObject.id, 'comment', reactObject.comment.input.value);
+    };
 }
 
 getAllReact().forEach(initReact);
