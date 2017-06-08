@@ -105,7 +105,6 @@ app.post('/api/snip', function(req, res){
 
 app.post('/api/update', function(req, res){
     var data = req.body;
-    console.log(data);
 
     getSnips().forEach( function (s){
         if(s.id == data.id){
@@ -113,8 +112,8 @@ app.post('/api/update', function(req, res){
 
             if(data.item === 'comment')
                 s.comments.push({'content': data.content});
-            else
-                s.react[data.item]++;
+            else if(data.item === 'react')
+                s.react[data.content]++;
         }
     });
 
