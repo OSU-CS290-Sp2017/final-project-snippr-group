@@ -11,7 +11,8 @@
     <div class="snip-details">
         {{description}}
     </div>
-    <button class="comment-button">comment</button>
+    <textarea id="comment-input"></textarea>
+    <button id="comment-submit">comment</button>
     <div class="react-buttons">
         <button id="button-like">♥ <a id="like-count">{{react.like}}</a></button>
         <button id="button-funny">☻ <a id="funny-count">{{react.funny}}</a></button>
@@ -24,3 +25,5 @@
         {{/each}}
     </div>
 </article>
+
+<script src='/snipInteract.js'></script>

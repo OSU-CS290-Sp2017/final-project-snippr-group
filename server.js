@@ -105,11 +105,16 @@ app.post('/api/snip', function(req, res){
 
 app.post('/api/update', function(req, res){
     var data = req.body;
+    console.log(data);
 
     getSnips().forEach( function (s){
         if(s.id == data.id){
             console.log('found');
-            s.react[data.item]++;
+
+            if(data.item === 'comment')
+                s.comments.push({'content': data.content});
+            else
+                s.react[data.item]++;
         }
     });
 
