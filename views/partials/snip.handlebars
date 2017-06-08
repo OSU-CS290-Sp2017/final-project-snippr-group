@@ -13,10 +13,10 @@
     </div>
     <button class="comment-button">comment</button>
     <div class="react-buttons">
-        <button id="button-like">♥ {{react.like}}</button>
-        <button id="button-funny">☻ {{react.funny}}</button>
-        <button id="button-cool">♫ {{react.cool}}</button>
-        <button id="button-wat">? {{react.wat}}</button>
+        <button id="button-like">♥ <a id="like-count">{{react.like}}</a></button>
+        <button id="button-funny">☻ <a id="funny-count">{{react.funny}}</a></button>
+        <button id="button-cool">♫ <a id="cool-count">{{react.cool}}</a></button>
+        <button id="button-wat">? <a id="wat-count">{{react.wat}}</a></button>
     </div>
     <div class="comments">      {{! Only pass a few high priority / recent comments for the }}
         {{#each comments}}      {{! main page. More can be shown when the page for this }}

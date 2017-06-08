@@ -104,8 +104,7 @@ app.post('/api/snip', function(req, res){
 });
 
 app.post('/api/update', function(req, res){
-    var data = req.body; 
-     console.log(req.body);
+    var data = req.body;
 
     getSnips().forEach( function (s){
         if(s.id == data.id){

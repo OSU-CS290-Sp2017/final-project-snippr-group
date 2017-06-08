@@ -29,10 +29,16 @@ function postUpdate(id, item){
     post.send(JSON.stringify({ 'id': id, 'item': item }));
 }
 
+function setClient(elem, item){
+    var countElem = elem.querySelector('a')
+    countElem.innerHTML = parseInt(countElem.innerHTML) + 1;
+}
+
 function initReact(reactObject){
     Object.keys(reactObject.actions).forEach( function(k) {
         reactObject.actions[k].onclick = function(){
             postUpdate(reactObject.id, k);
+            setClient(reactObject.actions[k], k);
         };
     });
 }
