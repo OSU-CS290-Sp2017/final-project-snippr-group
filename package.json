@@ -1,24 +1,25 @@
 {
-	"name": "final-project-snippr",
-	"version": "1.0.0",
-	"description": "",
-	"main": "server.js",
-	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
-		"build": "handlebars views/partials/header.handlebars -f public/snipTemplate.js",
-		"prestart": "npm run build",
-		"start": "node server.js"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+ssh://git@github.com/OSU-CS290-Sp2017/final-project-snippr-group.git"
-	},
-	"author": "Nicholas Milford, Tristan Thompson, Owen Loughran",
-	"license": "UNLICENSED",
-	"dependencies": {
-		"express": "^4.15.3",
-		"express-handlebars": "^3.0.0",
-		"handlebars": "^4.0.10",
-    "body-parser": "^1.9.2"
-	}
+  "name": "final-project-snippr",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "handlebars views/partials/header.handlebars -f public/snipTemplate.js",
+    "prestart": "npm run build",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/OSU-CS290-Sp2017/final-project-snippr-group.git"
+  },
+  "author": "Nicholas Milford, Tristan Thompson, Owen Loughran",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "body-parser": "^1.9.2",
+    "express": "^4.15.3",
+    "express-handlebars": "^3.0.0",
+    "handlebars": "^4.0.10",
+    "masonry-layout": "^4.2.0"
+  }
 }
