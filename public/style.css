@@ -114,6 +114,20 @@ header{
    background-color: #444;
 }
 
+.snip-singleContainer {
+   margin: 0;
+   padding: inherit;
+   padding-top: 5%;
+   width: 100%;
+
+   display: flex;
+   flex-wrap: wrap;
+   align-self: center;
+   align-items: center;
+
+   background-color: #444;
+}
+
 .snip {
    margin: 0 15px 15px 15px;
    border: 6.5px solid rgb(103,130,91);
@@ -180,7 +194,7 @@ header{
    width: 97%;
    height: 50px;
 
-   color: #fff;
+   color: #111;
    background-color: #BFBFBF;
 }
 
@@ -237,5 +251,19 @@ header{
 }
 
 .comments {
+  margin: inherit;
+  padding: inherit;
+  border-top: 2px solid #97DB4F;
 
+  font-size: 20px;
+
+
+  color: #999;
+}
+
+.comment {
+  margin: 3px 0 2px 3px ;
+  padding: inherit;
+  padding-left: 3px;
+  border: 1px dashed #aaa;
 }
