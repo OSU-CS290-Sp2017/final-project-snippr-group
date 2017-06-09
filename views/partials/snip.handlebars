@@ -6,13 +6,13 @@
         {{!--<a href="#">{{author}}</a>--}}{{author}}
     </div>
     <div class="snip-code">
-        {{> codeblock this.code}}
+        {{> codeblock code}}
     </div>
     <div class="snip-details">
         {{description}}
     </div>
     <textarea id="comment-input" placeholder="Write a Comment..."></textarea>
-    <button id="comment-submit">comment</button>
+    <button id="comment-submit">comment (<a id="comment-count">{{comments.length}}</a>)</button>
     <div class="react-buttons">
         <button class = "react-button" id="button-like">♥ <a id="like-count">{{react.like}}</a></button>
         <button class = "react-button" id="button-funny">☻ <a id="funny-count">{{react.funny}}</a></button>

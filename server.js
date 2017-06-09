@@ -15,6 +15,8 @@ var app = expr();
 
 var snipCount = 0;
 
+// ----- helping functions -----
+
 function fits(s1, s2)
 {
   return s1.toLowerCase().includes(s2.toLowerCase());
@@ -32,6 +34,20 @@ function getSnips() {
 function putSnip(snip) {
   exData.push(snip);
   initSnip(snip);
+}
+
+function shortenSnip(snip){
+    var toReturn = JSON.parse(JSON.stringify(snip)) //deep copy
+    if(toReturn.description.length > 100){
+        toReturn.description = 
+            toReturn.description
+            .substring(0, 140)
+            + '...';
+    }
+    if(toReturn.comments.length > 5){
+        toReturn.comments = toReturn.comments.slice(0, 5);
+    }
+    return toReturn;
 }
 
 // sets the ID for the snip so that it may be referenced by URL
@@ -71,7 +87,7 @@ app.get('*', function(req, res, next){
 
 app.get('/', function(req, res){
     res.status(200);
-    var args = getSnips();
+    var args = getSnips().map(shortenSnip);
     res.render('snipMany', args);
 });
 
