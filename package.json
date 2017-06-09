@@ -19,6 +19,7 @@
     "body-parser": "^1.9.2",
     "express": "^4.15.3",
     "express-handlebars": "^3.0.0",
-    "handlebars": "^4.0.10"
+    "handlebars": "^4.0.10",
+    "highlighter": "^0.1.0"
   }
 }
