@@ -8,7 +8,7 @@
             <li class="navitem" id="nav-search"><a href="#">S e a r c h</a></li>
             <li class="navitem" id="nav-create"><a href="/create">C r e a t e</a></li>
             <li class="navitem" id="nav-styleSelect">
-                <datalist id="styleSelect-menu">
+                <select id="styleSelect-menu">
                     {{#each this}}
                         {{#if nested}}
                             <optgroup label="{{name}}">
@@ -20,7 +20,7 @@
                             <option value="{{val}}">{{name}}</option>
                         {{/if}}
                     {{/each}}
-                </datalist>
+                </select>
             </li>
         </ul>
     </nav>
