@@ -75,9 +75,9 @@ app.get('/', function(req, res){
     res.render('snipMany', args);
 });
 
-app.get('/single/[0-9]+', function(req, res, next){
+app.get('/single/:id', function(req, res, next){
     res.status(200);
-    var idx = parseInt(req.url.match('[0-9]+')[0]);
+    var idx = parseInt(req.params.id);
 
     if(isNaN(idx) || idx < 0 || idx >= snipCount){
         console.log('Snip DNE:', idx);
@@ -98,10 +98,9 @@ app.get('/search', function(req, res){
     res.render('snipSearch');
 })
 
-app.get('/style/*', function(req, res, next){
+app.get('/style/:fname', function(req, res, next){
     res.status(200);
-    var fName = req.url.split('/').pop();
-    fs.readFile('./node_modules/highlight.js/styles/'+fName, function(err, data){
+    fs.readFile('./node_modules/highlight.js/styles/'+req.params.fname, function(err, data){
         if(err){
             console.log(err);
             next();
