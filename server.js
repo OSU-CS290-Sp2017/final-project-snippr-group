@@ -7,7 +7,7 @@ var fs = require('fs');
 var styles = require('./loadStyles.js');
 var search = require('./search.js');
 var bodyParser = require('body-parser');
-var favicon = require('serve-favicon');
+var hljs = require('highlight.js');
 
 var hbs = exhbs.create({defaultLayout: 'main'});
 var exData = require('./exampleData.json');
@@ -71,11 +71,11 @@ getSnips().forEach(initSnip);
 //     initSnip(getSnips()[i]);
 // }
 
-var header = hbs.render('views/partials/header.handlebars', styles.load('./node_modules/highlight.js/styles'));
+var header = hbs.render('views/precompile/stylesList.handlebars', styles.load('./node_modules/highlight.js/styles'));
 
 header
 .catch(function (err) { console.log("ERROR PRECOMPILING HEADER", err) })
-.then(function (val) { fs.writeFileSync('./views/partials/headerPre.handlebars', val) });
+.then(function (val) { fs.writeFileSync('./views/partials/stylesList.handlebars', val) });
 
 // ----- Setting up Express routing -----
 app.engine('handlebars', hbs.engine);

@@ -1,0 +1,11 @@
+{{#each this}}
+    {{#if nested}}
+        <optgroup label="{{name}}">
+            {{#each val}}
+                <option value="{{val}}">{{name}}</option>
+            {{/each}}
+        </optgroup>
+    {{else}}
+        <option value="{{val}}">{{name}}</option>
+    {{/if}}
+{{/each}}
