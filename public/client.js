@@ -34,16 +34,6 @@ function getStyle(styleName){
     }
 }
 
-var elem = document.querySelector('.snip-container');
-var msnry = new Masonry( elem, {
-  // options
-  itemSelector: '.snip',
-  columnWidth: 200
-});
-
-var msnry = new Masonry( '.snip-container', {
-  // options
-});
 
 
 // ----- event functions -----
