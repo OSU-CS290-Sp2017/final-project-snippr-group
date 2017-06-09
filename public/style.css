@@ -19,13 +19,12 @@ header{
    display: inline-flex;
 
    background-color: #111;
+   z-index: 1;
 }
 
 .site-title {
    margin: 0;
-   padding: inherit;
-   padding-left: 10px;
-   width: 25%;
+   padding: 0 0 0 10px;
 
    text-align: left;
    font-size: 50px;
@@ -38,7 +37,11 @@ header{
    margin: inherit;
    padding: inherit;
 
-   display: none;
+   height: 50px;
+
+   background-color: #97DB4F;
+
+   border-radius: 10px;
 }
 
 .navbar{
@@ -66,6 +69,12 @@ header{
    font-weight: 600;
 
    color: #90A955;
+
+   cursor: pointer;
+}
+
+.navitem:hover {
+   color: #97DB4F;
 }
 
 #nav-create {
@@ -81,8 +90,8 @@ header{
    border: 0;
 
    position: fixed;
-   top: 0.4%;
-   right: 0.7%;
+   top: 10px;
+   right: 10px;
 
    width: 100px;
 
@@ -95,10 +104,10 @@ header{
    padding-top: 5%;
    width: 100%;
 
-   display: flex;
+   /*display: flex;
    flex-wrap: wrap-reverse;
    align-self: center;
-   align-items: flex-end;
+   align-items: flex-end;*/
 }
 
 .snip {
@@ -106,8 +115,8 @@ header{
    width: 45%;
    border: 6.5px solid rgb(103,130,91);
 
-   /*flex-grow: 1;*/
-   flex: 0 auto;
+
+   /*flex: 0 55%;*/
 
    background-color: #222;
 }
@@ -122,10 +131,9 @@ header{
    color: #97DB4F;
 }
 
-.snip-code {
-   padding: 0;
-   margin: 0;
- }
+.snip-title:hover {
+   color: #00FF00;
+}
 
 .snip-author {
    margin: 0 15px 0 0;
@@ -137,12 +145,88 @@ header{
    color: #999;
 }
 
-#codebox {
-   /*margin: 0 15% 0 15%;*/
-/*
-   width: 100%;*/
+.snip-code {
+   margin: 0;
+   padding: 0;
+   border-top: 2px solid #FDFDFD;
+   border-bottom: 2px solid #FDFDFD;
+ }
+
+ #wtfispre {
+    margin: 0;
+ }
+
+.snip-details {
+   margin: 0;
+   padding: 6px;
+   border-bottom: 2px solid #999;
+
+   color: #999;
 }
 
-#wtfispre {
+#comment-input {
+   margin: 3px 0 0 3px;
+   padding: 10px;
+   border: 0;
+   width: 97%;
+   height: 50px;
+
+   color: #fff;
+   background-color: #666;
+}
+
+#comment-submit {
+   margin-right: 5px;
+   border: 0;
+
+   float: right;
+
+   font-size: 20px;
+
+   background-color: #90A955;
+
+   cursor: pointer;
+}
+#comment-submit:hover {
+   background-color: #97DB4F;
+}
+
+.react-buttons {
+   margin: inherit;
+   padding: inherit;
+
+}
+
+.react-button {
    margin: 0;
+   border: 0;
+   border-radius: 10px;
+
+   display: inline;
+
+   font-size: 20px;
+
+   background-color: #999;
+
+   cursor: pointer;
+}
+
+.react-button:hover {
+   background-color: #fff;
+}
+
+#button-like {
+   color: red;
+}
+
+#button-funny {
+   color: #DDDD2C;
+}
+
+#button-cool {
+   color: blue;
+}
+
+.comments {
+
 }
