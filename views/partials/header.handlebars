@@ -1,14 +1,14 @@
 <header>
-    <img class="logo" src="/logo.png" alt="Put out logo here">
     <h1 class="site-title">Snippr</h1>
-
+    <img class="logo" src="/Logo.svg" alt="Put out logo here">
+    
     <nav class="navbar">
         <ul class="navlist">
             <li class="navitem" id="nav-home"><a href="/">H o m e</a></li>
             <li class="navitem" id="nav-search"><a href="#">S e a r c h</a></li>
             <li class="navitem" id="nav-create"><a href="/create">C r e a t e</a></li>
             <li class="navitem" id="nav-styleSelect">
-                <datalist id="styleSelect-menu">
+                <select id="styleSelect-menu">
                     {{#each this}}
                         {{#if nested}}
                             <optgroup label="{{name}}">
@@ -20,7 +20,7 @@
                             <option value="{{val}}">{{name}}</option>
                         {{/if}}
                     {{/each}}
-                </datalist>
+                </select>
             </li>
         </ul>
     </nav>

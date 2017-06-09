@@ -1,3 +1,8 @@
+/*
+    This file exports a function that searches through a directory, collecting
+    all .css files and grouping them by first word if possible.
+*/
+
 var fs = require('fs');
 
 function getName(file){
@@ -14,7 +19,7 @@ function getFirst(file){ //get the first word, for grouping purposes
     return getVal(file).split('-')[0];
 }
 
-exports.load = function (path){
+exports['load'] = function (path){
     var stylesList = [];
     var filesList = fs.readdirSync(path);
 
@@ -47,4 +52,4 @@ exports.load = function (path){
 
     console.log('loaded', filesList.length, 'styles,', stylesList.length, 'unique styles');
     return stylesList;
-}
+};

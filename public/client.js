@@ -18,7 +18,7 @@ function loadStyle(styleName){
     xhttp.send();
 }
 
-function getStyle(styleName){        
+function getStyle(styleName){
     if (history.pushState) {
         var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?style=' + styleName;
         window.history.pushState({path:newurl},'',newurl);
@@ -33,6 +33,18 @@ function getStyle(styleName){
         document.getElementById('highlight-style').innerHTML = cacheStyles[styleName];
     }
 }
+
+var elem = document.querySelector('.snip-container');
+var msnry = new Masonry( elem, {
+  // options
+  itemSelector: '.snip',
+  columnWidth: 200
+});
+
+var msnry = new Masonry( '.snip-container', {
+  // options
+});
+
 
 // ----- event functions -----
 
