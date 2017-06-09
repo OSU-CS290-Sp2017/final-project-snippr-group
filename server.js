@@ -15,8 +15,10 @@ var app = expr();
 
 var snipCount = 0;
 
-// ----- helping functions -----
-
+function fits(s1, s2)
+{
+  return s1.toLowerCase().includes(s2.toLowerCase());
+}
 /*
 * Get snips. TODO: Get from server.
 */
