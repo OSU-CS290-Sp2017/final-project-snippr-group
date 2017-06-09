@@ -104,10 +104,10 @@ header{
    padding-top: 5%;
    width: 100%;
 
-   /*display: flex;
+   display: flex;
    flex-wrap: wrap-reverse;
    align-self: center;
-   align-items: flex-end;*/
+   align-items: flex-end;
 }
 
 .snip {
@@ -116,7 +116,7 @@ header{
    border: 6.5px solid rgb(103,130,91);
 
 
-   /*flex: 0 55%;*/
+   flex: 0 55%;
 
    background-color: #222;
 }
