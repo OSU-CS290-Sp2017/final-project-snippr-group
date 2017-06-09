@@ -4,7 +4,7 @@ body {
    margin: 0;
    padding: 0;
 
-   background-color: #444;
+   background-color: #555;
 }
 
 a {
@@ -20,11 +20,12 @@ header{
 
    background-color: #111;
    z-index: 1;
+   box-shadow: 2px 2px 2px black;
 }
 
 .site-title {
    margin: 0;
-   padding: 0 0 0 10px;
+   padding: 0 20% 0 10px;
 
    text-align: left;
    font-size: 50px;
@@ -42,6 +43,7 @@ header{
    background-color: #97DB4F;
 
    border-radius: 10px;
+   display: none;
 }
 
 .navbar{
@@ -99,26 +101,29 @@ header{
 }
 
 .snip-container {
-   margin: 0;
+   margin: 0 25% 0 25%;
    padding: inherit;
    padding-top: 5%;
-   width: 100%;
+   width: 50%;
 
    display: flex;
-   flex-wrap: wrap-reverse;
+   flex-wrap: wrap;
    align-self: center;
-   align-items: flex-end;
+   align-items: center;
+
+   background-color: #444;
 }
 
 .snip {
-   margin: 0 15px 5px 15px;
-   width: 45%;
+   margin: 0 15px 15px 15px;
    border: 6.5px solid rgb(103,130,91);
 
 
-   flex: 0 55%;
+   flex: 0 99%;
+
 
    background-color: #222;
+   box-shadow: 2px 2px 2px black ;
 }
 
 .snip-title {
@@ -156,6 +161,10 @@ header{
     margin: 0;
  }
 
+#codebox {
+   width: 99%;
+}
+
 .snip-details {
    margin: 0;
    padding: 6px;
@@ -172,7 +181,7 @@ header{
    height: 50px;
 
    color: #fff;
-   background-color: #666;
+   background-color: #BFBFBF;
 }
 
 #comment-submit {
