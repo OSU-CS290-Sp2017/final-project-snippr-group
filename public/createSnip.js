@@ -26,8 +26,8 @@ function getSubmission(){
 function submitToServer(snip){
     var post = new XMLHttpRequest();
 
-    post.open('POST', '/new', true);
-    post.setRequestHeader('Content-type', 'json');
+    post.open('POST', '/api/snip', true);
+    post.setRequestHeader('Content-Type', 'application/json');
 
     post.onreadystatechange = function(){
         var params = window.location.search;
@@ -37,9 +37,8 @@ function submitToServer(snip){
             window.location.href = dest;
         }, 100);
     };
-
-    post.send(snip);
-    console.log('sent', snip);
+    
+    post.send(JSON.stringify(snip));
 }
 
-form.submit.onclick = function(){ submitToServer(getSubmission()) };
+form.submit.onclick = function(){ submitToServer(getSubmission()); };

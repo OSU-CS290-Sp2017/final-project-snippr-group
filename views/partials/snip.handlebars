@@ -1,4 +1,4 @@
-<article class="snip">
+<article class="snip" id="{{id}}">
     <div class="snip-title">
         <a href="/single/{{id}}">{{title}}</a>
     </div>
@@ -11,11 +11,19 @@
     <div class="snip-details">
         {{description}}
     </div>
-    <button class="comment-button">comment</button>
-    <button class="react-buttons">☻/♥/♫/‼</button>
+    <textarea id="comment-input" placeholder="Write a Comment..."></textarea>
+    <button id="comment-submit">comment</button>
+    <div class="react-buttons">
+        <button class = "react-button" id="button-like">♥ <a id="like-count">{{react.like}}</a></button>
+        <button class = "react-button" id="button-funny">☻ <a id="funny-count">{{react.funny}}</a></button>
+        <button class = "react-button" id="button-cool">♫ <a id="cool-count">{{react.cool}}</a></button>
+        <button class = "react-button" id="button-wat">? <a id="wat-count">{{react.wat}}</a></button>
+    </div>
     <div class="comments">      {{! Only pass a few high priority / recent comments for the }}
         {{#each comments}}      {{! main page. More can be shown when the page for this }}
             {{> comment this}}  {{! particular snip is requested}}
         {{/each}}
     </div>
 </article>
+
+<script src='/snipInteract.js'></script>
