@@ -14,7 +14,7 @@ function loadStyle(styleName){
         }
     }
 
-    xhttp.open('GET', '/highlight/styles/' + styleName + ".css", true);
+    xhttp.open('GET', '/style/' + styleName + ".css", true);
     xhttp.send();
 }
 

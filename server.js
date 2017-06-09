@@ -54,7 +54,7 @@ getSnips().forEach(initSnip);
 //     initSnip(getSnips()[i]);
 // }
 
-var header = hbs.render('views/partials/header.handlebars', styles.load('./public/highlight/styles'));
+var header = hbs.render('views/partials/header.handlebars', styles.load('./node_modules/highlight.js/styles'));
 
 header
 .catch(function (err) { console.log("ERROR PRECOMPILING HEADER", err) })
@@ -87,6 +87,23 @@ app.get('/single/[0-9]+', function(req, res, next){
         res.render('snipSingle', getSnips()[idx]);
     }
 });
+
+app.get('/style/*', function(req, res, next){
+    res.status(200);
+    var fName = req.url.split('/').pop();
+    console.log(fName);
+    fs.readFile('./node_modules/highlight.js/styles/'+fName, function(err, data){
+        if(err){
+            console.log(err);
+            next();
+        }
+        else{
+            console.log('found');
+            res.write(data);
+            res.end();
+        }
+    });
+})
 
 app.get('/api/search', function(req, res){
   var snips = getSnips();
