@@ -11,13 +11,13 @@
     <div class="snip-details">
         {{description}}
     </div>
-    <textarea id="comment-input"></textarea>
+    <textarea id="comment-input" placeholder="Write a Comment..."></textarea>
     <button id="comment-submit">comment</button>
     <div class="react-buttons">
-        <button id="button-like">♥ <a id="like-count">{{react.like}}</a></button>
-        <button id="button-funny">☻ <a id="funny-count">{{react.funny}}</a></button>
-        <button id="button-cool">♫ <a id="cool-count">{{react.cool}}</a></button>
-        <button id="button-wat">? <a id="wat-count">{{react.wat}}</a></button>
+        <button class = "react-button" id="button-like">♥ <a id="like-count">{{react.like}}</a></button>
+        <button class = "react-button" id="button-funny">☻ <a id="funny-count">{{react.funny}}</a></button>
+        <button class = "react-button" id="button-cool">♫ <a id="cool-count">{{react.cool}}</a></button>
+        <button class = "react-button" id="button-wat">? <a id="wat-count">{{react.wat}}</a></button>
     </div>
     <div class="comments">      {{! Only pass a few high priority / recent comments for the }}
         {{#each comments}}      {{! main page. More can be shown when the page for this }}
