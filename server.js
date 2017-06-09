@@ -40,7 +40,7 @@ function putSnip(snip) {
 function shortenSnip(snip){
     var toReturn = JSON.parse(JSON.stringify(snip)) //deep copy
     if(toReturn.description.length > 100){
-        toReturn.description = 
+        toReturn.description =
             toReturn.description
             .substring(0, 140)
             + '...';
@@ -71,7 +71,7 @@ getSnips().forEach(initSnip);
 //     initSnip(getSnips()[i]);
 // }
 
-var header = hbs.render('views/partials/header.handlebars', styles.load('./node_modules/highlight.js/styles'));
+var header = hbs.render('./views/partials/header.handlebars', styles.load('./node_modules/highlight.js/styles'));
 
 header
 .catch(function (err) { console.log("ERROR PRECOMPILING HEADER", err) })
