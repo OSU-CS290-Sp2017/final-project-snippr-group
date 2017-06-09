@@ -7,6 +7,7 @@ var fs = require('fs');
 var styles = require('./loadStyles.js');
 var search = require('./search.js');
 var bodyParser = require('body-parser');
+var favicon = require('serve-favicon');
 
 var hbs = exhbs.create({defaultLayout: 'main'});
 var exData = require('./exampleData.json');
