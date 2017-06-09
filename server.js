@@ -15,6 +15,10 @@ var bodyParser = require('body-parser')
 var snipCount = 0;
 var styles = 0;
 
+function fits(s1, s2)
+{
+  return s1.toLowerCase().includes(s2.toLowerCase());
+}
 /*
 * Get snips. TODO: Get from server.
 */
@@ -77,7 +81,7 @@ function fitsPart(part, snip) {
 //Returns true if query is in object, for each object[k][key], for k is each value in object.
 function isManyObject(key, query, object) {
   for(k in object) {
-    if(k[key].contains(query)) {
+    if(fits(k[key],query)) {
       return true;
     }
   }
@@ -87,7 +91,7 @@ function isManyObject(key, query, object) {
 //Returns true if query is in object, for each object[k], for k is each value in object
 function isManyValue(query, object) {
   for(k in object) {
-    if(object[k].contains(query)) {
+    if(fits(object[k],query)) {
       return true;
     }
   }
@@ -95,7 +99,7 @@ function isManyValue(query, object) {
 }
 //Returns true if object[key] contains query
 function isSelected(key, query, object) {
-  return object[key].contains(query);
+  return fits(object[key], query);
 }
 
 // ----- startup computations -----
@@ -182,10 +186,13 @@ app.get('/single/[0-9]+', function(req, res, next){
 });
 
 app.get('/api/search', function(req, res){
-
   var snips = getSnips();
   var parts = req.body;
   res.render('snipMany', searchSnips(parts, snips));
+});
+
+app.get('/create', function(req, res){
+  res.render('snipCreate');
 });
 
 app.post('api/snip', function(req, res){
@@ -193,6 +200,7 @@ app.post('api/snip', function(req, res){
   putSnip(snip);
   res.sendStatus(200);
 });
+
 
 app.use(expr.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
