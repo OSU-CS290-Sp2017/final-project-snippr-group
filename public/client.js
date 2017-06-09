@@ -34,8 +34,6 @@ function getStyle(styleName){
     }
 }
 
-
-
 // ----- event functions -----
 
 function loadEvent(){
