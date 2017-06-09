@@ -88,32 +88,35 @@ app.get('/single/[0-9]+', function(req, res, next){
     }
 });
 
+app.get('/create', function(req, res){
+  res.status(200);
+  res.render('snipCreate');
+});
+
+app.get('/search', function(req, res){
+    res.status(200);
+    res.render('snipSearch');
+})
+
 app.get('/style/*', function(req, res, next){
     res.status(200);
     var fName = req.url.split('/').pop();
-    console.log(fName);
     fs.readFile('./node_modules/highlight.js/styles/'+fName, function(err, data){
         if(err){
             console.log(err);
             next();
         }
         else{
-            console.log('found');
             res.write(data);
             res.end();
         }
     });
-})
+});
 
 app.get('/api/search', function(req, res){
   var snips = getSnips();
   var parts = req.body;
   res.render('snipMany', search(parts, snips));
-});
-
-app.get('/create', function(req, res){
-  res.status(200);
-  res.render('snipCreate');
 });
 
 app.post('/api/snip', function(req, res){
