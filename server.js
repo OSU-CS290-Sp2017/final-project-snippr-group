@@ -61,12 +61,14 @@ app.get('/single/:id', function(req, res, next){
     res.status(200);
     var idx = parseInt(req.params.id);
 
-    if(isNaN(idx) || idx < 0 || idx >= snipCount) {
+    if(isNaN(idx) || idx < 0) {
         console.log('Snip DNE:', idx);
         next();
     }
     else {
-        res.render('snipSingle', database.get()[idx]);
+        database.get({id: idx}, function(arr, errs){
+            res.render('snipSingle', arr[0]);
+        });
     }
 })
 
@@ -95,12 +97,6 @@ app.get('/style/:fname', function(req, res, next){
     })
 })
 
-app.get('/api/search/:select/:value', function(req, res){
-  var snips = database.get();
-  var parts = req.body;
-  res.render('snipMany', search(parts, snips));
-});
-
 app.get('/create', function(req, res) {
   res.status(200);
   res.render('snipCreate');
@@ -114,27 +110,7 @@ app.post('/api/snip', function(req, res) {
 
 app.post('/api/update', function(req, res, next) {
     var data = req.body;
-
-    database.get({id: data.id}).toArray(function(err, found) {
-       if(err) {
-         res.status(500).send("Error updating: " + err)
-       }
-       else if(found.length < 1) {
-         // Could not find snip
-         next();
-       }
-       else {
-         var snip = found[0];
-         if(data.item === 'comment') {
-             snip.comments.unshift({'content': data.content})
-         }
-         else if(data.item === 'react') {
-             snip.react[data.content]++;
-         }
-         database.put(snip);
-         res.sendStatus(200);
-       }
-    })
+    database.update(data.item, data.content, data.id);
 })
 
 app.use(expr.static(path.join(__dirname, 'public')));

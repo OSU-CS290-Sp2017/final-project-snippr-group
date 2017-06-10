@@ -44,15 +44,15 @@ exports.put = (snip) => {
 
 //Update a snip on database.
 exports.update = (part, content, snipId) => {
-      getSnips((v, e) => {
+      exports.get({id:snipId}, (v, e) => {
         v.forEach( function (s) {
-          if(s.id == data.id) {
+          if(s.id == snipId) {
               console.log('found');
 
-              if(data.item === 'comment')
-                  s.comments.unshift({'content': data.content})
-              else if(data.item === 'react')
-                  s.react[data.content]++;
+              if(part === 'comment')
+                  s.comments.unshift({'content': content})
+              else if(part === 'react')
+                  s.react[content]++;
           }
         })
       })
@@ -82,6 +82,4 @@ exports.init = () => mongoClient.connect(url, function(err, db) {
       mongoDB.collection("snips").updateOne({"id": snipId}, {$set: {part:content}}, (err,r) => { if(err) console.log(err) } )
     }
   }
-
-  connectionComplete = true;
 });
