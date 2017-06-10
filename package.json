@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "handlebars views/partials/header.handlebars -f public/snipTemplate.js",
     "prestart": "npm run build",
-    "start": "node server.js"
+    "start": "mongoEnvSetup & node server.js"
   },
   "repository": {
     "type": "git",
@@ -20,6 +20,7 @@
     "express": "^4.15.3",
     "express-handlebars": "^3.0.0",
     "handlebars": "^4.0.10",
-    "masonry-layout": "^4.2.0"
+    "masonry-layout": "^4.2.0",
+    "mongodb": "^2.2.28"
   }
 }
