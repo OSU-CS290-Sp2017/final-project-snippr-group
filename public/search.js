@@ -1,13 +1,13 @@
 var searchContainer = document.querySelector('.snipSearch');
 var searchBySelect = document.querySelector('#search-by');
 var searchInput = document.querySelector('#search-input');
+var searchButton = document.querySelector('#search-submit');
 
 var searchOptions = {};
 
 function initSearchOptions(){
     var inputs = document.getElementsByClassName('search-option');
 
-    console.log(inputs.length);
     for(var i = 0; i < inputs.length; i++){
         if(inputs[i].id.indexOf('search-') !== -1){
             //Element is a search input
@@ -27,7 +27,17 @@ function showSearchOption(){
     var value = searchBySelect.value;
     searchInput.removeChild(searchInput.firstChild);
     searchInput.appendChild(searchOptions[value]);
+    searchInput.firstChild.style.display = 'initial';
+}
+
+function sendSearch(){
+    var url = '/api/search/' + searchBySelect + '/' + searchContainer.firstChild.value;
+
+    window.setTimeout(function(){
+        window.location.href = url + window.location.search;
+    }, 100);
 }
 
 initSearchOptions();
-searchBySelect.onchange = function(){};
+searchBySelect.onchange = showSearchOption;
+searchButton.onclick = sendSearch();
