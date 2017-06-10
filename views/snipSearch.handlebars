@@ -1,6 +1,27 @@
-{{> headerPre}}
-
 <div class="snip-search">
     <label for="search-by">Search By:</label>
-    
+    <select id="search-by"></select>
+
+    <label for="search-input">Search For:</label>
+    <div id="search-input"></div>
+
+    <select id="search-language" class="search-option">
+        {{> languageList}}
+    </select>
+
+    <input id="search-title" class="search-option">
+    <input id="search-author" class="search-option">
+    <textarea id="search-code" class="search-option"></textarea>
+
+    <label for="sort-by">Sort Results By:</label>
+    <select id="sort-by">
+        <option>Like</option>
+        <option>Funny</option>
+        <option>Cool</option>
+        <option>Wat</option>
+    </select>
+
+    <button id="search-submit">Search</button>
 </div>
+
+<script src="search.js"></script>

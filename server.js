@@ -8,8 +8,9 @@ var styles = require('./loadStyles.js');
 var search = require('./search.js');
 var bodyParser = require('body-parser');
 var MongoClient = require('mongodb').MongoClient
+var hljs = require('highlight.js');
 
-var hbs = exhbs.create({defaultLayout: 'main'});
+var hbs = exhbs.create({defaultLayout: 'main'})
 var exData = require('./exampleData.json');
 var port = process.env.PORT || 3000;
 var app = expr();
@@ -26,8 +27,8 @@ var mongoDBName = process.env.MONGO_DB
 var mongoDB;
 var url = 'mongodb://' + mongoUser + ':' + mongoPassword + '@' + mongoHost + ':' + mongoPort + '/' + mongoDBName;
 
-//Below are the interface in order to access the database. Implementation is based on whether or not the database can be accessed.
-//See the MongoClient.connect call to see implementations.
+// Below are the interface in order to access the database. Implementation is based on whether or not the database can be accessed.
+// See the MongoClient.connect call to see implementations.
 
 /*
 * Get snips based on mongodb critera
@@ -65,7 +66,7 @@ MongoClient.connect(url, function(err, db) {
               console.log('found');
 
               if(data.item === 'comment')
-                  s.comments.unshift({'content': data.content});
+                  s.comments.unshift({'content': data.content})
               else if(data.item === 'react')
                   s.react[data.content]++;
           }
@@ -84,16 +85,30 @@ MongoClient.connect(url, function(err, db) {
     }
     putNewSnip = (snip) => {
       initSnip(snip);
-      mongoDB.collection("snips").insert(snip, (err, r) => { if(err) console.log(err) } );
+      mongoDB.collection("snips").insert(snip, (err, r) => { if(err) console.log(err) } )
     }
     updateSnip = (part, content, snipId) => {
       mongoDB.collection("snips").updateOne({"id": snipId}, {$set: {part:content}}, (err,r) => { if(err) console.log(err) } )
     }
   }
-});
+})
 
 function fits(s1, s2) {
   return s1.toLowerCase().includes(s2.toLowerCase());
+}
+
+function shortenSnip(snip){
+    var toReturn = JSON.parse(JSON.stringify(snip)) //deep copy
+    if(toReturn.description.length > 100){
+        toReturn.description =
+            toReturn.description
+            .substring(0, 140)
+            + '...';
+    }
+    if(toReturn.comments.length > 5){
+        toReturn.comments = toReturn.comments.slice(0, 5);
+    }
+    return toReturn;
 }
 
 // sets the ID for the snip so that it may be referenced by URL
@@ -110,18 +125,18 @@ function initSnip(snip){
 
 app.use(bodyParser.json());
 
-//getSnips().forEach(initSnip);
+// getSnips().forEach(initSnip);
 
 
 // for(var i = 0; i < getSnips().length; i++){
-//     initSnip(getSnips()[i]);
+    // initSnip(getSnips()[i]);
 // }
 
-var header = hbs.render('views/partials/header.handlebars', styles.load('./public/highlight/styles'));
+var header = hbs.render('./views/precompile/stylesList.handlebars', styles.load('./node_modules/highlight.js/styles'));
 
 header
 .catch(function (err) { console.log("ERROR PRECOMPILING HEADER", err) })
-.then(function (val) { fs.writeFileSync('./views/partials/headerPre.handlebars', val) });
+.then(function (val) { fs.writeFileSync('./views/partials/stylesList.handlebars', val) })
 
 // ----- Setting up Express routing -----
 app.engine('handlebars', hbs.engine);
@@ -130,17 +145,16 @@ app.set('view engine', 'handlebars');
 app.get('*', function(req, res, next) {
     console.log('GETTING', req.url);
     next();
-});
+})
 
 app.get('/', function(req, res) {
     res.status(200);
-    var args = getSnips({});
-    res.render('snipMany', args);
-});
+    var args = getSnips({}, (r, e) => res.render('snipMany', r));
+})
 
-app.get('/single/[0-9]+', function(req, res, next) {
+app.get('/single/:id', function(req, res, next){
     res.status(200);
-    var idx = parseInt(req.url.match('[0-9]+')[0]);
+    var idx = parseInt(req.params.id);
 
     if(isNaN(idx) || idx < 0 || idx >= snipCount) {
         console.log('Snip DNE:', idx);
@@ -149,7 +163,7 @@ app.get('/single/[0-9]+', function(req, res, next) {
     else {
         res.render('snipSingle', getSnips()[idx]);
     }
-});
+})
 
 app.get('/api/search', function(req, res) {
   var search = req.body;
@@ -157,16 +171,36 @@ app.get('/api/search', function(req, res) {
   res.render('snipMany', snips);//search(parts, snips));
 });
 
+app.get('/create', function(req, res){
+  res.status(200);
+  res.render('snipCreate');
+})
+
+app.get('/style/:fname', function(req, res, next){
+    res.status(200);
+    fs.readFile('./node_modules/highlight.js/styles/'+req.params.fname, function(err, data){
+        if(err){
+            console.log(err);
+            next();
+        }
+        else{
+            res.write(data);
+            res.end();
+        }
+    })
+})
+
+
 app.get('/create', function(req, res) {
   res.status(200);
   res.render('snipCreate');
-});
+})
 
 app.post('/api/snip', function(req, res) {
   var snip = req.body;
   putNewSnip(snip);
   res.sendStatus(200);
-});
+})
 
 app.post('/api/update', function(req, res, next) {
     var data = req.body;
@@ -175,13 +209,13 @@ app.post('/api/update', function(req, res, next) {
          res.status(500).send("Error updating: " + err)
        }
        else if(found.length < 1) {
-         //Could not find snip
+         // Could not find snip
          next();
        }
        else {
          var snip = found[0];
          if(data.item === 'comment') {
-             snip.comments.unshift({'content': data.content});
+             snip.comments.unshift({'content': data.content})
          }
          else if(data.item === 'react') {
              snip.react[data.content]++;
@@ -190,17 +224,17 @@ app.post('/api/update', function(req, res, next) {
          res.sendStatus(200);
 
        }
-    });
+    })
     // getSnips().forEach( function (s){
-    //     if(s.id == data.id){
-    //         console.log('found');
-    //
-    //         if(data.item === 'comment')
-    //             s.comments.unshift({'content': data.content});
-    //         else if(data.item === 'react')
-    //             s.react[data.content]++;
-    //     }
-    // });
+        // if(s.id == data.id){
+            // console.log('found');
+
+            // if(data.item === 'comment')
+                // s.comments.unshift({'content': data.content})
+            // else if(data.item === 'react')
+                // s.react[data.content]++;
+        // }
+    // })
 
 })
 
@@ -210,10 +244,9 @@ app.get('*', function(req, res){
     res.status(404);
     console.log('could not GET', req.url, '\n');
     res.send();
-});
+})
 
-// ----- starting server -----
-
+//----- starting server -----
 app.listen(port, function(){
     console.log('Server started on', port);
-});
+})

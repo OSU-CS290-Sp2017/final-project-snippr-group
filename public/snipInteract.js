@@ -12,7 +12,8 @@ function getAllReact(){
                 {
                     'submit': snips[i].querySelector('#comment-submit'),
                     'input': snips[i].querySelector('#comment-input'),
-                    'container': snips[i].querySelector('.comments')
+                    'container': snips[i].querySelector('.comments'),
+                    'count': snips[i].querySelector('#comment-count')
                 },
                 'actions':
                 {
@@ -47,14 +48,20 @@ function setClientComment(elem, item){
     tempDiv.innerHTML = commentTemplate;
     var comment = tempDiv.childNodes[0];
     comment.querySelector('.comment-content').appendChild(document.createTextNode(item));
+
     elem.insertBefore(comment, elem.firstChild);
+}
+
+function incrementCount(elem, item){
+    var count = elem.querySelector('#' + item + '-count');
+    count.innerHTML = parseInt(count.innerHTML) + 1;
 }
 
 function initReact(reactObject){
     Object.keys(reactObject.actions).forEach( function(k) {
         reactObject.actions[k].onclick = function(){
             postUpdate(reactObject.id, 'react', k);
-            setClientReact(reactObject.actions[k], k);
+            incrementCount(reactObject.actions[k], k);
         };
     });
 
@@ -62,6 +69,7 @@ function initReact(reactObject){
         if(reactObject.comment.input !== ''){
             postUpdate(reactObject.id, 'comment', reactObject.comment.input.value);
             setClientComment(reactObject.comment.container, reactObject.comment.input.value);
+            incrementCount(reactObject.comment.submit, 'comment');
         }
     };
 }

@@ -6,7 +6,7 @@
             "language": "c",
             "code": "float Q_rsqrt( float number )\n{\n\tlong i;\n\tfloat x2, y;\n\tconst float threehalfs = 1.5F;\n\n\tx2 = number * 0.5F;\n\ty  = number;\n\ti  = * ( long * ) &y;                       // evil floating point bit level hacking\n\ti  = 0x5f3759df - ( i >> 1 );               // what the fuck? \n\ty  = * ( float * ) &i;\n\ty  = y * ( threehalfs - ( x2 * y * y ) );   // 1st iteration\n//\ty  = y * ( threehalfs - ( x2 * y * y ) );   // 2nd iteration, this can be removed\n\n\treturn y;\n}"
         },
-        "description": "Quickly calculates 1/sqrt(x), useful for graphics and physics because the formula is a key part in normalizing vectors",
+        "description": "Quickly calculates 1/sqrt(x), useful for graphics and physics because the formula is a key part of normalizing vectors",
         "comments": [
             {
                 "content": "Neat!",
@@ -21,7 +21,7 @@
             "language": "haskell",
             "code": "class Monad m where\n  (>>=)  :: m a -> (  a -> m b) -> m b\n  (>>)   :: m a ->  m b         -> m b\n  return ::   a                 -> m a\n  fail   :: String -> m a"
         },
-        "description": "The definition of the Monad class in Haskell. This is the basis on what many parts of the language are built upon",
+        "description": "The definition of the Monad class in Haskell. This is the basis on what many parts of the language are built upon. Implemented here are the three basic monadic functions: map, apply, and return.",
         "comments": [
             {
                 "content": "beautiful",
