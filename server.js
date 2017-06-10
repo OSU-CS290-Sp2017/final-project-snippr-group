@@ -7,96 +7,15 @@ var fs = require('fs');
 var styles = require('./loadStyles.js');
 var search = require('./search.js');
 var bodyParser = require('body-parser');
-var MongoClient = require('mongodb').MongoClient
-var hljs = require('highlight.js');
+var database = require('./mongoDB.js');
 
 var hbs = exhbs.create({defaultLayout: 'main'})
-var exData = require('./exampleData.json');
 var port = process.env.PORT || 3000;
 var app = expr();
 
-var snipCount = 0;
+// ----- helping functions -----
 
-// Connection URL
-var mongoHost = process.env.MONGO_HOST
-var mongoPort = process.env.MONGO_PORT||27017
-var mongoUser = process.env.MONGO_USER
-var mongoPassword = process.env.MONGO_PASSWORD
-var mongoDBName = process.env.MONGO_DB
-
-var mongoDB;
-var url = 'mongodb://' + mongoUser + ':' + mongoPassword + '@' + mongoHost + ':' + mongoPort + '/' + mongoDBName;
-
-// Below are the interface in order to access the database. Implementation is based on whether or not the database can be accessed.
-// See the MongoClient.connect call to see implementations.
-
-/*
-* Get snips based on mongodb critera
-*/
-var getSnips;
-
-/*
-* Add snip to database
-*/
-var putNewSnip;
-
-/*
-* Update a snip on database.
-*/
-var updateSnip
-
-
-// Use connect method to connect to the server
-MongoClient.connect(url, function(err, db) {
-  if(err) {
-    console.log("Error connecting to database:")
-    console.log(err);
-    console.log("Using fallback methods...");
-    getSnips = (criteria, callback) => {
-      callback(exData, undefined);
-    }
-    putNewSnip = (snip) => {
-      initSnip(snip);
-      exData.push(snip);
-    }
-    updateSnip = (part, content, snipId) => {
-      getSnips((v, e) => {
-        v.forEach( function (s) {
-          if(s.id == data.id) {
-              console.log('found');
-
-              if(data.item === 'comment')
-                  s.comments.unshift({'content': data.content})
-              else if(data.item === 'react')
-                  s.react[data.content]++;
-          }
-        })
-      })
-    }
-
-  }
-
-  else
-  {
-    console.log("Connected successfully to database");
-    mongoDB = db;
-    getSnips = (criteria, callback) => {
-      mongoDB.find(criteria).toArray(callback);
-    }
-    putNewSnip = (snip) => {
-      initSnip(snip);
-      mongoDB.collection("snips").insert(snip, (err, r) => { if(err) console.log(err) } )
-    }
-    updateSnip = (part, content, snipId) => {
-      mongoDB.collection("snips").updateOne({"id": snipId}, {$set: {part:content}}, (err,r) => { if(err) console.log(err) } )
-    }
-  }
-})
-
-function fits(s1, s2) {
-  return s1.toLowerCase().includes(s2.toLowerCase());
-}
-
+//shorten long description and comment chains
 function shortenSnip(snip){
     var toReturn = JSON.parse(JSON.stringify(snip)) //deep copy
     if(toReturn.description.length > 100){
@@ -111,26 +30,11 @@ function shortenSnip(snip){
     return toReturn;
 }
 
-// sets the ID for the snip so that it may be referenced by URL
-function initSnip(snip){
-    snip['id'] = snipCount;
-    snipCount++;
-
-    snip['react'] = { 'like':0, 'funny':0, 'cool':0, 'wat':0 };
-
-    console.log('Snip', snipCount-1, 'ID set');
-}
-
 // ----- startup computations -----
 
 app.use(bodyParser.json());
 
-// getSnips().forEach(initSnip);
-
-
-// for(var i = 0; i < getSnips().length; i++){
-    // initSnip(getSnips()[i]);
-// }
+database.init();
 
 var header = hbs.render('./views/precompile/stylesList.handlebars', styles.load('./node_modules/highlight.js/styles'));
 
@@ -139,6 +43,7 @@ header
 .then(function (val) { fs.writeFileSync('./views/partials/stylesList.handlebars', val) })
 
 // ----- Setting up Express routing -----
+
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 
@@ -149,7 +54,7 @@ app.get('*', function(req, res, next){
 
 app.get('/', function(req, res) {
     res.status(200);
-    var args = getSnips({}, (r, e) => res.render('snipMany', r));
+    var args = database.get({}, (r, e) => res.render('snipMany', r));
 })
 
 app.get('/single/:id', function(req, res, next){
@@ -161,13 +66,13 @@ app.get('/single/:id', function(req, res, next){
         next();
     }
     else {
-        res.render('snipSingle', getSnips()[idx]);
+        res.render('snipSingle', database.get()[idx]);
     }
 })
 
 app.get('/api/search', function(req, res) {
   var search = req.body;
-  var snips = getSnips(search);
+  var snips = database.get(search);
   res.render('snipMany', snips);//search(parts, snips));
 });
 
@@ -191,7 +96,7 @@ app.get('/style/:fname', function(req, res, next){
 })
 
 app.get('/api/search/:select/:value', function(req, res){
-  var snips = getSnips();
+  var snips = database.get();
   var parts = req.body;
   res.render('snipMany', search(parts, snips));
 });
@@ -203,13 +108,14 @@ app.get('/create', function(req, res) {
 
 app.post('/api/snip', function(req, res) {
   var snip = req.body;
-  putNewSnip(snip);
+  database.put(snip);
   res.sendStatus(200);
 })
 
 app.post('/api/update', function(req, res, next) {
     var data = req.body;
-    getSnips({id: data.id}).toArray(function(err, found) {
+
+    database.get({id: data.id}).toArray(function(err, found) {
        if(err) {
          res.status(500).send("Error updating: " + err)
        }
@@ -225,21 +131,10 @@ app.post('/api/update', function(req, res, next) {
          else if(data.item === 'react') {
              snip.react[data.content]++;
          }
-         putSnip(snip);
+         database.put(snip);
          res.sendStatus(200);
-
        }
     })
-    // getSnips().forEach( function (s){
-        // if(s.id == data.id){
-            // console.log('found');
-
-            // if(data.item === 'comment')
-                // s.comments.unshift({'content': data.content})
-            // else if(data.item === 'react')
-                // s.react[data.content]++;
-        // }
-    // })
 })
 
 app.use(expr.static(path.join(__dirname, 'public')));
