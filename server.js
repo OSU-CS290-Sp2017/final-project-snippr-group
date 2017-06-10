@@ -71,7 +71,7 @@ getSnips().forEach(initSnip);
 //     initSnip(getSnips()[i]);
 // }
 
-var header = hbs.render('views/precompile/stylesList.handlebars', styles.load('./node_modules/highlight.js/styles'));
+var header = hbs.render('./views/precompile/stylesList.handlebars', styles.load('./node_modules/highlight.js/styles'));
 
 header
 .catch(function (err) { console.log("ERROR PRECOMPILING HEADER", err) })
