@@ -125,3 +125,13 @@ app.get('*', function(req, res){
 app.listen(port, function(){
     console.log('Server started on port', port);
 });
+
+//Close the connection to mongodb when the server is terminated
+process.on('SIGINT', () => {
+  if(database.mongoDB)
+  {
+    console.log("closing database connection")
+    database.mongoDB.close();
+  }
+  process.exit();
+})
