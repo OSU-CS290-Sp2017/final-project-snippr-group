@@ -142,8 +142,8 @@ header
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 
-app.get('*', function(req, res, next) {
-    console.log('GETTING', req.url);
+app.get('*', function(req, res, next){
+    console.log('GET', req.url);
     next();
 })
 
@@ -190,6 +190,11 @@ app.get('/style/:fname', function(req, res, next){
     })
 })
 
+app.get('/api/search/:select/:value', function(req, res){
+  var snips = getSnips();
+  var parts = req.body;
+  res.render('snipMany', search(parts, snips));
+});
 
 app.get('/create', function(req, res) {
   res.status(200);
@@ -235,18 +240,17 @@ app.post('/api/update', function(req, res, next) {
                 // s.react[data.content]++;
         // }
     // })
-
 })
 
 app.use(expr.static(path.join(__dirname, 'public')));
 
 app.get('*', function(req, res){
     res.status(404);
-    console.log('could not GET', req.url, '\n');
+    console.log('could not GET', req.url);
     res.send();
 })
 
 //----- starting server -----
 app.listen(port, function(){
-    console.log('Server started on', port);
-})
+    console.log('Server started on port', port);
+});
