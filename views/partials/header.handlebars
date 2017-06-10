@@ -5,21 +5,11 @@
     <nav class="navbar">
         <ul class="navlist">
             <li class="navitem" id="nav-home"><a href="/">H o m e</a></li>
-            <li class="navitem" id="nav-search"><a href="#">S e a r c h</a></li>
+            <li class="navitem" id="nav-search"><a href="/search">S e a r c h</a></li>
             <li class="navitem" id="nav-create"><a href="/create">C r e a t e</a></li>
             <li class="navitem" id="nav-styleSelect">
                 <select id="styleSelect-menu">
-                    {{#each this}}
-                        {{#if nested}}
-                            <optgroup label="{{name}}">
-                                {{#each val}}
-                                    <option value="{{val}}">{{name}}</option>
-                                {{/each}}
-                            </optgroup>
-                        {{else}}
-                            <option value="{{val}}">{{name}}</option>
-                        {{/if}}
-                    {{/each}}
+                    {{> stylesList}}
                 </select>
             </li>
         </ul>

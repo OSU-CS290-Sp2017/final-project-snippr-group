@@ -14,7 +14,7 @@ function loadStyle(styleName){
         }
     }
 
-    xhttp.open('GET', '/highlight/styles/' + styleName + ".css", true);
+    xhttp.open('GET', '/style/' + styleName + ".css", true);
     xhttp.send();
 }
 
@@ -33,18 +33,6 @@ function getStyle(styleName){
         document.getElementById('highlight-style').innerHTML = cacheStyles[styleName];
     }
 }
-
-var elem = document.querySelector('.snip-container');
-var msnry = new Masonry( elem, {
-  // options
-  itemSelector: '.snip',
-  columnWidth: 200
-});
-
-var msnry = new Masonry( '.snip-container', {
-  // options
-});
-
 
 // ----- event functions -----
 
