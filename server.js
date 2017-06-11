@@ -54,7 +54,7 @@ app.get('*', function(req, res, next){
 
 app.get('/', function(req, res) {
     res.status(200);
-    var args = database.get({}, (r, e) => res.render('snipMany', r));
+    var args = database.get({}, (e, r) => res.render('snipMany', r));
 })
 
 app.get('/single/:id', function(req, res, next){
@@ -66,7 +66,8 @@ app.get('/single/:id', function(req, res, next){
         next();
     }
     else {
-        database.get({id: idx}, function(arr, errs){
+        database.get({id: idx}, function(errs, arr){
+            console.log(errs, arr);
             res.render('snipSingle', arr[0]);
         });
     }
@@ -74,8 +75,7 @@ app.get('/single/:id', function(req, res, next){
 
 app.get('/api/search', function(req, res) {
   var search = req.body;
-  var snips = database.get(search);
-  res.render('snipMany', snips);//search(parts, snips));
+  var snips = database.get(search, (e, r) => res.render('snipMany', snips));
 });
 
 app.get('/create', function(req, res){

@@ -33,7 +33,7 @@ function initSnip(snip){
 
 // Get snips based on mongodb critera
 exports.get = (criteria, callback) => {
-      callback(exData, undefined);
+      callback(undefined, exData);
     };
 
 // Add snip to database
@@ -72,14 +72,17 @@ exports.init = () => mongoClient.connect(url, function(err, db) {
     console.log("Connected successfully to database");
     mongoDB = db;
     exports.get = (criteria, callback) => {
-      mongoDB.find(criteria).toArray(callback);
+        mongoDB.collection('snips').find(criteria).toArray(callback);
     }
     exports.put = (snip) => {
       initSnip(snip);
       mongoDB.collection("snips").insert(snip, (err, r) => { if(err) console.log(err) } )
     }
     exports.update = (part, content, snipId) => {
-      mongoDB.collection("snips").updateOne({"id": snipId}, {$set: {part:content}}, (err,r) => { if(err) console.log(err) } )
+        var toSet = {};
+        toSet[part] = content;
+        console.log(toSet);
+      mongoDB.collection("snips").updateOne({"id": snipId}, {$set: toSet}, (err,r) => { if(err) console.log(err); else console.log(r.result); } );
     }
   }
 });
