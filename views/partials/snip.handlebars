@@ -19,9 +19,9 @@
         <button class = "react-button" id="button-cool">♫ <a id="cool-count">{{react.cool}}</a></button>
         <button class = "react-button" id="button-wat">? <a id="wat-count">{{react.wat}}</a></button>
     </div>
-    <div class="comments">      {{! Only pass a few high priority / recent comments for the }}
-        {{#each comments}}      {{! main page. More can be shown when the page for this }}
-            {{> comment this}}  {{! particular snip is requested}}
+    <div class="comments">    
+        {{#each comments}}      
+            {{> comment this}} 
         {{/each}}
     </div>
 </article>

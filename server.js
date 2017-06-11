@@ -102,6 +102,11 @@ app.get('/create', function(req, res) {
   res.render('snipCreate');
 })
 
+app.get('/search', function(req, res){
+    res.status(200);
+    res.render('snipSearch');
+})
+
 app.post('/api/snip', function(req, res) {
   var snip = req.body;
   database.put(snip);
@@ -110,6 +115,7 @@ app.post('/api/snip', function(req, res) {
 
 app.post('/api/update', function(req, res, next) {
     var data = req.body;
+    console.log(req.body);
     database.update(data.item, data.content, data.id);
 })
 
