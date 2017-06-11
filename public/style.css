@@ -267,3 +267,40 @@ header{
   padding-left: 3px;
   border: 1px dashed #aaa;
 }
+
+#snip-create {
+   margin: 0 25% 0 25%;
+   padding: inherit;
+   padding-top: 5%;
+   width: 50%;
+
+   display: flex;
+   flex-wrap: wrap;
+   align-self: center;
+   align-items: center;
+
+   background-color: #444;
+}
+
+#create-submit {
+   margin-right: 5px;
+   border: 0;
+
+   float: right;
+
+   font-size: 20px;
+
+   background-color: #90A955;
+
+   cursor: pointer;
+}
+
+#create-title {
+
+}
+
+#create-language {
+  position: relative;
+  top: 10px;
+  right: 10px;
+}
