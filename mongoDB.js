@@ -12,6 +12,7 @@ var mongoPort = process.env.MONGO_PORT||27017
 var mongoUser = process.env.MONGO_USER
 var mongoPassword = process.env.MONGO_PASSWORD
 var mongoDBName = process.env.MONGO_DB
+var mongoCollection = process.env.MONGO_COLLECTION
 
 var connectionComplete = false;
 var mongoDB;
@@ -77,24 +78,24 @@ exports.init = () => mongoClient.connect(url, function(err, db) {
     mongoDB = db;
 
     exports.get = (criteria, callback) => {
-        mongoDB.collection('snips').find(criteria).toArray(callback);
+        mongoDB.collection(mongoCollection).find(criteria).toArray(callback);
     }
 
     exports.getById = (id, callback) => {
         console.log(id);
-        var found = mongoDB.collection('snips').find({'_id': new mongoControl.ObjectID(id)}).toArray(((err, v) => callback(v[0])));
+        var found = mongoDB.collection(mongoCollection).find({'_id': new mongoControl.ObjectID(id)}).toArray(((err, v) => callback(v[0])));
     }
 
     exports.put = (snip) => {
       initSnip(snip);
-      mongoDB.collection("snips").insert(snip, (err, r) => { if(err) console.log(err) } )
+      mongoDB.collection(mongoCollection).insert(snip, (err, r) => { if(err) console.log(err) } )
     }
 
     exports.update = (part, content, snipId) => {
         var toSet = {};
         toSet[part] = content;
         console.log(toSet, '-', snipId);
-        mongoDB.collection("snips").updateOne({"_id": new mongoControl.ObjectID(snipId)}, {$set: toSet}, (err,r) => { if(err) console.log(err); else console.log(r.result); } );
+        mongoDB.collection(mongoCollection).updateOne({"_id": new mongoControl.ObjectID(snipId)}, {$set: toSet}, (err,r) => { if(err) console.log(err); else console.log(r.result); } );
     }
   }
 });
