@@ -58,15 +58,15 @@ function incrementCount(elem, item){
 }
 
 function initReact(reactObject){
-    Object.keys(reactObject.actions).forEach( function(k) {
-        reactObject.actions[k].onclick = function(){
-            postUpdate(reactObject.id, 'react', k);
-            incrementCount(reactObject.actions[k], k);
+    Object.keys(reactObject.actions).forEach( function(key) {
+        reactObject.actions[key].onclick = function(){
+            postUpdate(reactObject.id, 'react.'+key, parseInt(reactObject.actions[key].querySelector('#'+key+'-count').innerHTML)+1);
+            incrementCount(reactObject.actions[key], key);
         };
     });
 
     reactObject.comment.submit.onclick = function() {
-        if(reactObject.comment.input !== ''){
+        if(reactObject.comment.input.value !== ''){
             postUpdate(reactObject.id, 'comment', reactObject.comment.input.value);
             setClientComment(reactObject.comment.container, reactObject.comment.input.value);
             incrementCount(reactObject.comment.submit, 'comment');
