@@ -59,18 +59,11 @@ app.get('/', function(req, res) {
 
 app.get('/single/:id', function(req, res, next){
     res.status(200);
-    var idx = parseInt(req.params.id);
 
-    if(isNaN(idx) || idx < 0) {
-        console.log('Snip DNE:', idx);
-        next();
-    }
-    else {
-        database.get({id: idx}, function(errs, arr){
-            console.log(errs, arr);
-            res.render('snipSingle', arr[0]);
-        });
-    }
+    database.getById(req.params.id, function(snip){
+        console.log(snip);
+        res.render('snipSingle', snip);
+    });
 })
 
 app.get('/api/search', function(req, res) {
@@ -115,7 +108,6 @@ app.post('/api/snip', function(req, res) {
 
 app.post('/api/update', function(req, res, next) {
     var data = req.body;
-    console.log(req.body);
     database.update(data.item, data.content, data.id);
 })
 

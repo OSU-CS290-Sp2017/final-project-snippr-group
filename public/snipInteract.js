@@ -7,7 +7,7 @@ function getAllReact(){
     for(var i = 0; i < snips.length; i++){
         toReturn.push(
             {
-                'id': parseInt(snips[i].attributes.id.value),
+                'id': snips[i].attributes.id.value,
                 'comment':
                 {
                     'submit': snips[i].querySelector('#comment-submit'),
