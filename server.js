@@ -112,7 +112,10 @@ app.post('/api/snip', function(req, res) {
 //Update a snip
 app.post('/api/update', function(req, res, next) {
     var data = req.body;
-    database.update(data.item, data.content, data.id);
+    if(data.item === 'comment')
+        database.addComment(data.id, {content:data.content});
+    else
+        database.update(data.item, data.content, data.id);
 })
 
 app.use(expr.static(path.join(__dirname, 'public')));
