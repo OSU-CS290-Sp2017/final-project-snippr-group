@@ -25,7 +25,9 @@ function shortenSnip(snip){
             + '...';
     }
     if(toReturn.comments.length > 5){
-        toReturn.comments = toReturn.comments.slice(0, 5);
+        var newArr = toReturn.comments.slice(0, 5);
+        newArr.length = toReturn.comments.length;
+        toReturn.comments = newArr;
     }
     return toReturn;
 }
