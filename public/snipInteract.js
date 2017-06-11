@@ -17,31 +17,31 @@ function getAllReact(){
                 },
                 'actions':
                 {
-                    'like': 
+                    'like':
                     {
                         'element': snips[i].querySelector('#button-like'),
                         'used': false,
                         'count': snips[i].querySelector('#like-count')
                     },
-                    'funny': 
+                    'funny':
                     {
                         'element': snips[i].querySelector('#button-funny'),
                         'used': false,
                         'count': snips[i].querySelector('#funny-count')
                     },
-                    'cool': 
+                    'cool':
                     {
                         'element': snips[i].querySelector('#button-cool'),
                         'used': false,
                         'count': snips[i].querySelector('#cool-count')
                     },
-                    'wat': 
+                    'wat':
                     {
                         'element':snips[i].querySelector('#button-wat'),
                         'used': false,
                         'count': snips[i].querySelector('#wat-count')
                     }
-                }            
+                }
             }
         );
     }
@@ -85,6 +85,7 @@ function initReact(reactObject){
         if(reactObject.comment.input.value !== ''){
             postUpdate(reactObject.id, 'comment', reactObject.comment.input.value);
             setClientComment(reactObject.comment.container, reactObject.comment.input.value);
+            reactObject.comment.input.value = "";
             incrementCount(reactObject.comment);
         }
     };
