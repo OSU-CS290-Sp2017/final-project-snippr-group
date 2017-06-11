@@ -81,7 +81,7 @@ exports.init = () => mongoClient.connect(url, function(err, db) {
     exports.update = (part, content, snipId) => {
         var toSet = {};
         toSet[part] = content;
-        console.log(toSet);
+        console.log(toSet, '-', snipId);
       mongoDB.collection("snips").updateOne({"id": snipId}, {$set: toSet}, (err,r) => { if(err) console.log(err); else console.log(r.result); } );
     }
   }

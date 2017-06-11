@@ -7,7 +7,7 @@ function getAllReact(){
     for(var i = 0; i < snips.length; i++){
         toReturn.push(
             {
-                'id': snips[i].attributes.id.value,
+                'id': parseInt(snips[i].attributes.id.value),
                 'comment':
                 {
                     'submit': snips[i].querySelector('#comment-submit'),
@@ -17,10 +17,30 @@ function getAllReact(){
                 },
                 'actions':
                 {
-                    'like': snips[i].querySelector('#button-like'),
-                    'funny': snips[i].querySelector('#button-funny'),
-                    'cool': snips[i].querySelector('#button-cool'),
-                    'wat': snips[i].querySelector('#button-wat')
+                    'like': 
+                    {
+                        'element': snips[i].querySelector('#button-like'),
+                        'used': false,
+                        'count': snips[i].querySelector('#like-count')
+                    },
+                    'funny': 
+                    {
+                        'element': snips[i].querySelector('#button-funny'),
+                        'used': false,
+                        'count': snips[i].querySelector('#funny-count')
+                    },
+                    'cool': 
+                    {
+                        'element': snips[i].querySelector('#button-cool'),
+                        'used': false,
+                        'count': snips[i].querySelector('#cool-count')
+                    },
+                    'wat': 
+                    {
+                        'element':snips[i].querySelector('#button-wat'),
+                        'used': false,
+                        'count': snips[i].querySelector('#wat-count')
+                    }
                 }            
             }
         );
@@ -38,11 +58,6 @@ function postUpdate(id, item, content){
     post.send(JSON.stringify({ 'id': id, 'item': item, 'content':content }));
 }
 
-function setClientReact(elem, item){
-    var reactCount = elem.querySelector('#' + item + '-count');
-    reactCount.innerHTML = parseInt(reactCount.innerHTML) + 1;
-}
-
 function setClientComment(elem, item){
     var tempDiv = document.createElement('div');
     tempDiv.innerHTML = commentTemplate;
@@ -52,16 +67,17 @@ function setClientComment(elem, item){
     elem.insertBefore(comment, elem.firstChild);
 }
 
-function incrementCount(elem, item){
-    var count = elem.querySelector('#' + item + '-count');
-    count.innerHTML = parseInt(count.innerHTML) + 1;
+function incrementCount(elem){
+    elem.count.innerHTML = parseInt(elem.count.innerHTML) + 1;
 }
 
 function initReact(reactObject){
     Object.keys(reactObject.actions).forEach( function(key) {
-        reactObject.actions[key].onclick = function(){
-            postUpdate(reactObject.id, 'react.'+key, parseInt(reactObject.actions[key].querySelector('#'+key+'-count').innerHTML)+1);
-            incrementCount(reactObject.actions[key], key);
+        reactObject.actions[key].element.onclick = function(){
+            if(reactObject.actions[key].used) { return; }
+            postUpdate(reactObject.id, 'react.'+key, parseInt(reactObject.actions[key].count.innerHTML)+1);
+            incrementCount(reactObject.actions[key]);
+            reactObject.actions[key].used = true;
         };
     });
 
@@ -69,7 +85,7 @@ function initReact(reactObject){
         if(reactObject.comment.input.value !== ''){
             postUpdate(reactObject.id, 'comment', reactObject.comment.input.value);
             setClientComment(reactObject.comment.container, reactObject.comment.input.value);
-            incrementCount(reactObject.comment.submit, 'comment');
+            incrementCount(reactObject.comment.submit);
         }
     };
 }
