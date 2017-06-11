@@ -31,7 +31,7 @@ function showSearchOption(){
 }
 
 function sendSearch(){
-    var url = '/api/search/' + searchBySelect + '/' + searchContainer.firstChild.value;
+    var url = '/api/search/' + searchBySelect.value + '/' + searchContainer.firstChild.value;
 
     window.setTimeout(function(){
         window.location.href = url + window.location.search;

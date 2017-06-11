@@ -55,7 +55,7 @@ app.get('*', function(req, res, next){
 
 app.get('/', function(req, res) {
     res.status(200);
-    var args = database.get({}, (e, r) => res.render('snipMany', r));
+    var args = database.get({}, (e, r) => res.render('snipMany', r.map(shortenSnip)));
 })
 
 app.get('/single/:id', function(req, res, next){
@@ -68,8 +68,9 @@ app.get('/single/:id', function(req, res, next){
 })
 
 //Search for a snip. Body should be formatted as a mongoDB search object
-app.get('/api/search', function(req, res) {
-  var search = req.body;
+app.get('/api/search/:key/:value', function(req, res) {
+  var search = {};
+  search[req.params.key] = req.params.value;
   var snips = database.get(search, (e, r) => res.render('snipMany', snips));
 });
 
