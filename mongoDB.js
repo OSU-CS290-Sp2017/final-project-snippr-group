@@ -96,5 +96,9 @@ exports.init = () => mongoClient.connect(url, function(err, db) {
         console.log(toSet, '-', snipId);
         mongoDB.collection("snips").updateOne({"_id": new mongoControl.ObjectID(snipId)}, {$set: toSet}, (err,r) => { if(err) console.log(err); else console.log(r.result); } );
     }
+
+    exports.addComment = (snipId, comment) => {
+      mongoDB.collection('snips').updateOne({'_id': new mongoControl.ObjectID(snipId)}, {$push: {comments: {$each: [comment], $position:0} } });
+    }
   }
 });

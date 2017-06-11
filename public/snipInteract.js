@@ -85,7 +85,7 @@ function initReact(reactObject){
         if(reactObject.comment.input.value !== ''){
             postUpdate(reactObject.id, 'comment', reactObject.comment.input.value);
             setClientComment(reactObject.comment.container, reactObject.comment.input.value);
-            incrementCount(reactObject.comment.submit);
+            incrementCount(reactObject.comment);
         }
     };
 }
