@@ -1,3 +1,7 @@
+/*
+* Interface to mongoDB
+*/
+
 var mongoControl = require('mongodb');
 var exData = require('./exampleData.json');
 var mongoClient = mongoControl.MongoClient;

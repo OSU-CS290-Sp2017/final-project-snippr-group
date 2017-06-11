@@ -1,4 +1,8 @@
 /*
+* Functionality to search for snips based on criteria.
+* NOTE: The introduction of mongoDB makes this code DEPRECATED.
+*/
+/*
 * Get snips from the specified locations.
 * parts is an array of objects that take the following shapes:
 * {path: ["comments", "*"], select: "content", query: "bep"} Go to "comments", iterate over each value in comments. Search for query in content
@@ -6,6 +10,7 @@
 * {path: ["code"], select: "code", query: "bep"} Go to "code" look for query in "code"
 * {path: ["code"], select: "*", query: "bep"} Go to "code", look for query in each value in "code"
 * Pretty sure Haskell would make this a lot easier but then again maybe I just don't know what the hell I'm doing :^)
+*
 */
 
 exports = function searchSnips(parts, snips) {

@@ -47,6 +47,7 @@ header
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 
+
 app.get('*', function(req, res, next){
     console.log('GET', req.url);
     next();
@@ -66,6 +67,7 @@ app.get('/single/:id', function(req, res, next){
     });
 })
 
+//Search for a snip. Body should be formatted as a mongoDB search object
 app.get('/api/search', function(req, res) {
   var search = req.body;
   var snips = database.get(search, (e, r) => res.render('snipMany', snips));
@@ -100,12 +102,14 @@ app.get('/search', function(req, res){
     res.render('snipSearch');
 })
 
+//Add a snip to the database.
 app.post('/api/snip', function(req, res) {
   var snip = req.body;
   database.put(snip);
   res.sendStatus(200);
 })
 
+//Update a snip
 app.post('/api/update', function(req, res, next) {
     var data = req.body;
     database.update(data.item, data.content, data.id);
