@@ -4,10 +4,10 @@ var expr = require('express');
 var exhbs = require('express-handlebars')
 var path = require('path');
 var fs = require('fs');
-var styles = require('./loadStyles.js');
-var search = require('./search.js');
+var styles = require('./server/loadStyles.js');
+var search = require('./server/search.js');
 var bodyParser = require('body-parser');
-var database = require('./mongoDB.js');
+var database = require('./server/mongoDB.js');
 
 var hbs = exhbs.create({defaultLayout: 'main'})
 var port = process.env.PORT || 3000;
