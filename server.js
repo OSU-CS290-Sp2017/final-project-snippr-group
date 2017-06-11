@@ -4,10 +4,10 @@ var expr = require('express');
 var exhbs = require('express-handlebars')
 var path = require('path');
 var fs = require('fs');
-var styles = require('./loadStyles.js');
-var search = require('./search.js');
+var styles = require('./server/loadStyles.js');
+var search = require('./server/search.js');
 var bodyParser = require('body-parser');
-var database = require('./mongoDB.js');
+var database = require('./server/mongoDB.js');
 
 var hbs = exhbs.create({defaultLayout: 'main'})
 var port = process.env.PORT || 3000;
@@ -55,7 +55,7 @@ app.get('*', function(req, res, next){
 
 app.get('/', function(req, res) {
     res.status(200);
-    var args = database.get({}, (e, r) => res.render('snipMany', r));
+    var args = database.get({}, (e, r) => res.render('snipMany', r.map(shortenSnip)));
 })
 
 app.get('/single/:id', function(req, res, next){
@@ -68,8 +68,9 @@ app.get('/single/:id', function(req, res, next){
 })
 
 //Search for a snip. Body should be formatted as a mongoDB search object
-app.get('/api/search', function(req, res) {
-  var search = req.body;
+app.get('/api/search/:key/:value', function(req, res) {
+  var search = {};
+  search[req.params.key] = req.params.value;
   var snips = database.get(search, (e, r) => res.render('snipMany', snips));
 });
 
@@ -112,7 +113,10 @@ app.post('/api/snip', function(req, res) {
 //Update a snip
 app.post('/api/update', function(req, res, next) {
     var data = req.body;
-    database.update(data.item, data.content, data.id);
+    if(data.item === 'comment')
+        database.addComment(data.id, {content:data.content});
+    else
+        database.update(data.item, data.content, data.id);
 })
 
 app.use(expr.static(path.join(__dirname, 'public')));
