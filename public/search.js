@@ -2,6 +2,7 @@ var searchContainer = document.querySelector('.snipSearch');
 var searchBySelect = document.querySelector('#search-by');
 var searchInput = document.querySelector('#search-input');
 var searchButton = document.querySelector('#search-submit');
+var sortBy = document.querySelector('#sort-by');
 
 var searchOptions = {};
 
@@ -17,7 +18,8 @@ function initSearchOptions(){
             inputs[i].style.display = 'none';
             
             var newOption = document.createElement('option');
-            newOption.appendChild(document.createTextNode(val));
+            newOption.appendChild(document.createTextNode(inputs[i].getAttribute('title')));
+            newOption.setAttribute('value', val);
             searchBySelect.appendChild(newOption);
         }
     }
@@ -31,7 +33,10 @@ function showSearchOption(){
 }
 
 function sendSearch(){
-    var url = '/api/search/' + searchBySelect.value + '/' + searchContainer.firstChild.value;
+    var url = '/api/search/' 
+        + searchBySelect.value + '/' 
+        + searchInput.firstChild.value + '/'
+        + sortBy.value;
 
     window.setTimeout(function(){
         window.location.href = url + window.location.search;
@@ -40,4 +45,4 @@ function sendSearch(){
 
 initSearchOptions();
 searchBySelect.onchange = showSearchOption;
-searchButton.onclick = sendSearch();
+searchButton.onclick = sendSearch;
