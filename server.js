@@ -4,10 +4,10 @@ var expr = require('express');
 var exhbs = require('express-handlebars')
 var path = require('path');
 var fs = require('fs');
-var styles = require('./loadStyles.js');
-var search = require('./search.js');
+var styles = require('./server/loadStyles.js');
+var search = require('./server/search.js');
 var bodyParser = require('body-parser');
-var database = require('./mongoDB.js');
+var database = require('./server/mongoDB.js');
 
 var hbs = exhbs.create({defaultLayout: 'main'})
 var port = process.env.PORT || 3000;
@@ -25,7 +25,9 @@ function shortenSnip(snip){
             + '...';
     }
     if(toReturn.comments.length > 5){
-        toReturn.comments = toReturn.comments.slice(0, 5);
+        var newArr = toReturn.comments.slice(0, 5);
+        newArr.length = toReturn.comments.length;
+        toReturn.comments = newArr;
     }
     return toReturn;
 }
@@ -55,7 +57,7 @@ app.get('*', function(req, res, next){
 
 app.get('/', function(req, res) {
     res.status(200);
-    var args = database.get({}, (e, r) => res.render('snipMany', r));
+    var args = database.get({}, (e, r) => res.render('snipMany', r.map(shortenSnip)));
 })
 
 app.get('/single/:id', function(req, res, next){
@@ -68,9 +70,14 @@ app.get('/single/:id', function(req, res, next){
 })
 
 //Search for a snip. Body should be formatted as a mongoDB search object
-app.get('/api/search', function(req, res) {
-  var search = req.body;
-  var snips = database.get(search, (e, r) => res.render('snipMany', snips));
+app.get('/api/search/:key/:value', function(req, res) {
+  var key = req.params.key;
+  var value = req.params.value;
+  database.search(key, value, (e, r) =>
+  {
+    res.render('snipMany', r.map(shortenSnip))
+  }
+);
 });
 
 app.get('/create', function(req, res){
@@ -90,11 +97,6 @@ app.get('/style/:fname', function(req, res, next){
             res.end();
         }
     })
-})
-
-app.get('/create', function(req, res) {
-  res.status(200);
-  res.render('snipCreate');
 })
 
 app.get('/search', function(req, res){
