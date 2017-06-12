@@ -81,6 +81,9 @@ exports.init = () => mongoClient.connect(url, function(err, db) {
         mongoDB.collection(mongoCollection).find(criteria).toArray(callback);
     }
 
+    //key: what part of snip to search. key1.key2 searches inside snip[key1][key2]
+    //value: what to search for. case insensitive.
+    //callback: function(error, found)
     exports.search = (key, value, callback) => {
       var reg = new RegExp(value, "i")
       var find = {};
@@ -105,7 +108,7 @@ exports.init = () => mongoClient.connect(url, function(err, db) {
     }
 
     exports.addComment = (snipId, comment) => {
-      mongoDB.collection('snips').updateOne({'_id': new mongoControl.ObjectID(snipId)}, {$push: {comments: {$each: [comment], $position:0} } });
+      mongoDB.collection(mongoCollection).updateOne({'_id': new mongoControl.ObjectID(snipId)}, {$push: {comments: {$each: [comment], $position:0} } });
     }
   }
 });
