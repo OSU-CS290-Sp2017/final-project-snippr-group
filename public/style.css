@@ -25,7 +25,7 @@ header{
 
 .site-title {
    margin: 0;
-   padding: 0 20% 0 10px;
+   padding: 0 0 0 10px;
 
    text-align: left;
    font-size: 50px;
@@ -43,18 +43,19 @@ header{
    background-color: #97DB4F;
 
    border-radius: 10px;
-   display: none;
 }
 
 .navbar{
    margin: 0;
    padding: 0;
-   width: 74%
+   padding-left: 10%;
+   width: 100%
 }
 
 .navlist{
    margin: 0;
    padding: 0;
+   width: 100%;
 }
 
 .navitem{
@@ -66,6 +67,7 @@ header{
 
    display: inline-block;
 
+   float: left;
 
    font-size: 22px;
    font-weight: 600;
@@ -78,24 +80,19 @@ header{
 .navitem:hover {
    color: #97DB4F;
 }
-
-#nav-create {
-   margin: inherit;
-   margin-right: 26px;
-
-   /*float: right;*/
+#nav-styleSelect {
+  margin: 1px 0  0 0;
+  padding: 0;
+  float: right;
 }
-
 #styleSelect-menu {
    margin: 0;
    padding: 0;
    border: 0;
-
-   position: fixed;
-   top: 10px;
-   right: 10px;
-
    width: 100px;
+
+   font-size: 22px;
+
 
    background-color: #97DB4F;
 }
@@ -176,7 +173,6 @@ header{
  }
 
 #codebox {
-   width: 99%;
 }
 
 .snip-details {
@@ -191,8 +187,9 @@ header{
    margin: 3px 0 0 3px;
    padding: 10px;
    border: 0;
-   width: 97%;
    height: 50px;
+
+   width: 97%;
 
    color: #111;
    background-color: #BFBFBF;
@@ -303,4 +300,19 @@ header{
   position: relative;
   top: 10px;
   right: 10px;
+}
+
+.snip-search {
+  padding-top: 10%;
+}
+
+#search-input  {
+  height: 15px;
+  background-color: pink;
+}
+
+#search-code {
+  height: 15px;
+  width: 60px;
+  background-color: blue;
 }
