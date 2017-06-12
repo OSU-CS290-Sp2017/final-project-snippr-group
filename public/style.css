@@ -306,7 +306,13 @@ header{
   padding-top: 10%;
 }
 
-#search-input {
+#search-input  {
   height: 15px;
   background-color: pink;
+}
+
+#search-code {
+  height: 15px;
+  width: 60px;
+  background-color: blue;
 }
