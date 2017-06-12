@@ -164,19 +164,15 @@ header{
 .snip-code {
    margin: 0;
    padding: 0;
-   width: 50%;
-
    border-top: 2px solid #FDFDFD;
    border-bottom: 2px solid #FDFDFD;
  }
 
  #wtfispre {
     margin: 0;
-    width: 50%;
  }
 
 #codebox {
-  width: 50%;
 }
 
 .snip-details {
@@ -192,6 +188,8 @@ header{
    padding: 10px;
    border: 0;
    height: 50px;
+
+   width: 97%;
 
    color: #111;
    background-color: #BFBFBF;
@@ -305,5 +303,10 @@ header{
 }
 
 .snip-search {
-   margin: 25%;
+  padding-top: 10%;
+}
+
+#search-input {
+  height: 15px;
+  background-color: pink;
 }
