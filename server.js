@@ -54,7 +54,7 @@ app.get('/', function(req, res) {
     database.get({}, (e, r) => {
         var args = r.map(shortenSnip);
         args.reverse();
-        res.render('snipMany', args);
+        res.render('snipMany', {snips: args});
     });
 })
 
@@ -75,7 +75,7 @@ app.get('/api/search/:key/:value/:sort', function(req, res) {
   {
     var args =  r.map(shortenSnip);
     args.sort((a, b) => {a.react[req.params.sort] - b.react[req.params.sort]});
-    res.render('snipMany', r.map(shortenSnip))
+    res.render('snipMany', {snips: r.map(shortenSnip)});
   }
 );
 });
