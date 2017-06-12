@@ -81,6 +81,12 @@ exports.init = () => mongoClient.connect(url, function(err, db) {
         mongoDB.collection(mongoCollection).find(criteria).toArray(callback);
     }
 
+    exports.search = (key, value, callback) => {
+      var reg = new RegExp(value, "i")
+      var find = {};
+      find[key] = reg
+      exports.get(find, callback);
+    }
     exports.getById = (id, callback) => {
         console.log(id);
         var found = mongoDB.collection(mongoCollection).find({'_id': new mongoControl.ObjectID(id)}).toArray(((err, v) => callback(v[0])));

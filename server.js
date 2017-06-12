@@ -71,9 +71,13 @@ app.get('/single/:id', function(req, res, next){
 
 //Search for a snip. Body should be formatted as a mongoDB search object
 app.get('/api/search/:key/:value', function(req, res) {
-  var search = {};
-  search[req.params.key] = req.params.value;
-  var snips = database.get(search, (e, r) => res.render('snipMany', snips));
+  var key = req.params.key;
+  var value = req.params.value;
+  database.search(key, value, (e, r) =>
+  {
+    res.render('snipMany', r.map(shortenSnip))
+  }
+);
 });
 
 app.get('/create', function(req, res){
@@ -93,11 +97,6 @@ app.get('/style/:fname', function(req, res, next){
             res.end();
         }
     })
-})
-
-app.get('/create', function(req, res) {
-  res.status(200);
-  res.render('snipCreate');
 })
 
 app.get('/search', function(req, res){
