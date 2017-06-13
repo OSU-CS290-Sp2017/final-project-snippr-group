@@ -292,6 +292,8 @@ header{
   left: 110px;
 
   font-size: 18px;
+
+  background-color: #eee;
 }
 #create-title-label {
   position: absolute;
@@ -307,6 +309,8 @@ header{
   left: 110px;
 
   font-size: 18px;
+
+  background-color: #eee;
 }
 #create-author-label {
 
@@ -341,6 +345,8 @@ header{
   position: absolute;
   top: 25%;
   left: 110px;
+
+  background-color: #eee;
 }
 
 #create-description {
@@ -349,6 +355,21 @@ header{
   position: absolute;
   top: 68%;
   left: 110px;
+
+  background-color: #eee;
+}
+
+#create-title:focus {
+  background-color: #fff;
+}
+#create-author:focus {
+  background-color: #fff;
+}
+#create-code:focus {
+  background-color: #fff;
+}
+#create-description:focus {
+  background-color: #fff;
 }
 
 #create-submit {
@@ -368,7 +389,7 @@ header{
   margin: 0 25% 0 25%;
   padding: inherit;
   width: 50%;
-  height: 500px;
+  height: 250px;
   border-radius: 30px;
 
   position: relative;
@@ -377,15 +398,82 @@ header{
   background-color: #97DB4F;
 }
 
-#search-input  {
-  height: 15px;
-  background-color: pink;
+#search-by {
+  position: absolute;
+  top:15%;
+  left: 80px;
+
+  font-size: 18px;
+}
+#search-by-label {
+  position: absolute;
+  top: 5%;
+  left: 80px;
+
+  font-size: 22px;
 }
 
-#search-code {
-  height: 15px;
-  width: 60px;
-  background-color: blue;
+#search-input {
+  position: absolute;
+  top: 35%;
+  left: 80px;
+
+  font-size: 18px !important;
+}
+#search-input-label {
+  position: absolute;
+  top: 25%;
+  left: 80px;
+
+  font-size: 22px;
+}
+
+#search-code.language {
+  font-size: 18px;
+}
+
+#searh-title {
+  font-size: 18px;
+}
+
+#search-author {
+  font-size: 18px;
+}
+
+#search-code.code {
+  font-size: 18px;
+}
+
+#search-description {
+  font-size: 18px;
+}
+
+#sort-by {
+  position: absolute;
+  top: 15%;
+  left: 300px;
+
+  font-size: 18px;
+}
+#sort-by-label {
+  position: absolute;
+  top: 5%;
+  left: 300px;
+
+  font-size: 22px;
+}
+
+#search-submit {
+  margin-right: 5px;
+  border: 0;
+
+  position: absolute;
+  bottom: 5%;
+  right: 25px;
+
+  font-size: 20px;
+
+  cursor: pointer;
 }
 
 @media(max-width: 1000px) {
@@ -410,5 +498,7 @@ header{
   .snip-search {
     margin: 0;
     width: 100%;
+
+    top: 10px;
   }
 }
