@@ -1,11 +1,9 @@
+/*Base CSS for document*/
 body {
-   font-family: 'Inconsolata', monospace; /* Try a monospace font and tell me how it works out */
+   font-family: 'Inconsolata', monospace;
 
    margin: 0;
    padding: 0;
-
-
-   /*font-size: 13px;*/
 
    background-color: #555;
 }
@@ -28,6 +26,7 @@ header{
    box-shadow: 2px 2px 2px black;
 }
 
+/*Title and Header/navbar CSS*/
 .site-title {
    margin: 0;
    padding: 0 0 0 10px;
@@ -82,14 +81,16 @@ header{
    cursor: pointer;
 }
 
-.navitem:hover {
+.navitem:hover { /*Changes color of navbar items when hovering*/
    color: #97DB4F;
 }
+
 #nav-styleSelect {
   margin: 1px 5px 0 0;
   padding: 0;
   float: right;
 }
+
 #styleSelect-menu {
    margin: 0;
    padding: 0;
@@ -102,6 +103,7 @@ header{
    background-color: #97DB4F;
 }
 
+/*CSS for main body*/
 .snip-container {
    margin: 0 25% 0 25%;
    padding: inherit;
@@ -116,6 +118,7 @@ header{
    background-color: #444;
 }
 
+/*CSS for single snip display*/
 .snip-singleContainer {
    margin: 0;
    padding: inherit;
@@ -130,6 +133,7 @@ header{
    background-color: #444;
 }
 
+/*CSS for Snigle Snip*/
 .snip {
    margin: 0 2.5% 15px 2.5%;
    border: 5px solid rgb(103,130,91);
@@ -176,9 +180,6 @@ header{
  #wtfispre {
     margin: 0;
  }
-
-#codebox {
-}
 
 .snip-details {
    margin: 0;
@@ -273,6 +274,8 @@ header{
   border: 1px dashed #aaa;
 }
 
+
+/*CSS for Snip creation page*/
 #snip-create {
    margin: 0 25% 0 25%;
    padding: inherit;
@@ -359,6 +362,7 @@ header{
   background-color: #eee;
 }
 
+/*CSS to change color of focused text box*/
 #create-title:focus {
   background-color: #fff;
 }
@@ -385,6 +389,7 @@ header{
    cursor: pointer;
 }
 
+/*CSS for Search page*/
 .snip-search {
   margin: 0 25% 0 25%;
   padding: inherit;
@@ -476,6 +481,7 @@ header{
   cursor: pointer;
 }
 
+/*CSS to for smaller devices and higher zoom levels*/
 @media(max-width: 1000px) {
   header{
      position: inherit;
