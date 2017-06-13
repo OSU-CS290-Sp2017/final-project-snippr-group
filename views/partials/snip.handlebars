@@ -14,10 +14,10 @@
     <textarea id="comment-input" placeholder="Write a Comment..."></textarea>
     <button id="comment-submit">comment (<a id="comment-count">{{comments.length}}</a>)</button>
     <div class="react-buttons">
-        <button class = "react-button" id="button-like">♥ <a id="like-count">{{react.like}}</a></button>
-        <button class = "react-button" id="button-funny">☻ <a id="funny-count">{{react.funny}}</a></button>
-        <button class = "react-button" id="button-cool">♫ <a id="cool-count">{{react.cool}}</a></button>
-        <button class = "react-button" id="button-wat">? <a id="wat-count">{{react.wat}}</a></button>
+        <button title="Like" class="react-button" id="button-like">♥ <a id="like-count">{{react.like}}</a></button>
+        <button title="Funny" class="react-button" id="button-funny">☻ <a id="funny-count">{{react.funny}}</a></button>
+        <button title="Cool" class="react-button" id="button-cool">♫ <a id="cool-count">{{react.cool}}</a></button>
+        <button title="Wat" class="react-button" id="button-wat">? <a id="wat-count">{{react.wat}}</a></button>
     </div>
     <div class="comments">    
         {{#each comments}}      
