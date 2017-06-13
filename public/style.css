@@ -4,6 +4,7 @@ body {
    margin: 0;
    padding: 0;
 
+
    /*font-size: 13px;*/
 
    background-color: #555;
@@ -19,6 +20,8 @@ header{
 
    position: fixed;
    display: inline-flex;
+
+   top: 0;
 
    background-color: #111;
    z-index: 1;
@@ -273,42 +276,105 @@ header{
 #snip-create {
    margin: 0 25% 0 25%;
    padding: inherit;
-   padding-top: 5%;
    width: 50%;
+   height: 500px;
+   border-radius: 30px;
 
-   display: flex;
-   flex-wrap: wrap;
-   align-self: center;
-   align-items: center;
+   position: relative;
+   top: 100px;
 
-   background-color: #444;
+   background-color: #97DB4F;
+}
+
+#create-title {
+  position: absolute;
+  top: 7%;
+  left: 110px;
+
+  font-size: 18px;
+}
+#create-title-label {
+  position: absolute;
+  top: 7%;
+  left: 1.5%;
+
+  font-size: 22px;
+}
+
+#create-author {
+  position: absolute;
+  top: 13%;
+  left: 110px;
+
+  font-size: 18px;
+}
+#create-author-label {
+
+  position: absolute;
+  top: 13%;
+  left: 1.5%;
+
+  font-size: 22px;
+}
+
+#create-language {
+  width: 100px;
+
+  position: absolute;
+  top: 19%;
+  left: 110px;
+
+  font-size: 18px;
+}
+#create-language-label {
+  position: absolute;
+  top: 19%;
+  left: 1.5%;
+
+  font-size: 22px;
+}
+
+#create-code {
+  width: 70%;
+  height: 40%;
+
+  position: absolute;
+  top: 25%;
+  left: 110px;
+}
+
+#create-description {
+  width: 65%;
+
+  position: absolute;
+  top: 68%;
+  left: 110px;
 }
 
 #create-submit {
    margin-right: 5px;
    border: 0;
 
-   float: right;
+   position: absolute;
+   bottom: 5%;
+   right: 25px;
 
    font-size: 20px;
-
-   background-color: #90A955;
 
    cursor: pointer;
 }
 
-#create-title {
-
-}
-
-#create-language {
-  position: relative;
-  top: 10px;
-  right: 10px;
-}
-
 .snip-search {
-  padding-top: 10%;
+  margin: 0 25% 0 25%;
+  padding: inherit;
+  width: 50%;
+  height: 500px;
+  border-radius: 30px;
+
+  position: relative;
+  top: 100px;
+
+  background-color: #97DB4F;
 }
 
 #search-input  {
@@ -333,6 +399,16 @@ header{
     margin: 0;
     padding: inherit;
     padding-top: 10px;
+    width: 100%;
+  }
+  #snip-create {
+    margin: 0;
+    width: 100%;
+
+    top: 10px;
+  }
+  .snip-search {
+    margin: 0;
     width: 100%;
   }
 }
