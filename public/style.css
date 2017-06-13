@@ -4,6 +4,8 @@ body {
    margin: 0;
    padding: 0;
 
+   /*font-size: 13px;*/
+
    background-color: #555;
 }
 
@@ -81,7 +83,7 @@ header{
    color: #97DB4F;
 }
 #nav-styleSelect {
-  margin: 1px 0  0 0;
+  margin: 1px 5px 0 0;
   padding: 0;
   float: right;
 }
@@ -89,7 +91,7 @@ header{
    margin: 0;
    padding: 0;
    border: 0;
-   width: 100px;
+   width: 200px;
 
    font-size: 22px;
 
@@ -100,7 +102,7 @@ header{
 .snip-container {
    margin: 0 25% 0 25%;
    padding: inherit;
-   padding-top: 5%;
+   padding-top: 100px;
    width: 50%;
 
    display: flex;
@@ -126,12 +128,12 @@ header{
 }
 
 .snip {
-   margin: 0 15px 15px 15px;
-   border: 6.5px solid rgb(103,130,91);
+   margin: 0 2.5% 15px 2.5%;
+   border: 5px solid rgb(103,130,91);
 
 
-   flex: 0 99%;
-
+   flex: 1 1 0;
+   max-width: 94%;
 
    background-color: #222;
    box-shadow: 2px 2px 2px black ;
@@ -184,8 +186,11 @@ header{
 }
 
 #comment-input {
-   margin: 3px 0 0 3px;
-   padding: 10px;
+   margin: 0;
+   margin-left: 0.5%;
+   margin-top: 0.5%;
+   padding: 0;
+   padding-left: 2%;
    border: 0;
    height: 50px;
 
@@ -315,4 +320,19 @@ header{
   height: 15px;
   width: 60px;
   background-color: blue;
+}
+
+@media(max-width: 1000px) {
+  header{
+     position: inherit;
+  }
+  .navbar{
+     padding: 0;
+  }
+   .snip-container {
+    margin: 0;
+    padding: inherit;
+    padding-top: 10px;
+    width: 100%;
+  }
 }
