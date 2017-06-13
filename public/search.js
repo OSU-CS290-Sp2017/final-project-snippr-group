@@ -33,6 +33,8 @@ function showSearchOption(){
 }
 
 function sendSearch(){
+    if(searchInput.firstChild.value === '' || searchBySelect.value === 'default') return;
+
     var url = '/api/search/' 
         + searchBySelect.value + '/' 
         + searchInput.firstChild.value + '/'
