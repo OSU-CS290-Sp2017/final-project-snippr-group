@@ -88,6 +88,7 @@ header{
 #nav-styleSelect {
   margin: 1px 5px 0 0;
   padding: 0;
+
   float: right;
 }
 
@@ -101,6 +102,8 @@ header{
 
 
    background-color: #97DB4F;
+
+   cursor: pointer;
 }
 
 /*CSS for main body*/
@@ -332,6 +335,8 @@ header{
   left: 110px;
 
   font-size: 18px;
+
+  cursor: pointer;
 }
 #create-language-label {
   position: absolute;
@@ -409,6 +414,8 @@ header{
   left: 80px;
 
   font-size: 18px;
+
+  cursor: pointer;
 }
 #search-by-label {
   position: absolute;
@@ -435,6 +442,7 @@ header{
 
 #search-code.language {
   font-size: 18px;
+
 }
 
 #searh-title {
@@ -459,6 +467,8 @@ header{
   left: 300px;
 
   font-size: 18px;
+
+  cursor: pointer;
 }
 #sort-by-label {
   position: absolute;
